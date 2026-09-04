@@ -10,8 +10,8 @@ resource "aws_vpc" "main" {
 resource "aws_subnet" "public_subnet" {
   vpc_id     = aws_vpc.main.id
   cidr_block = var.public_subnet_cidrs[count.index]
-  count = 3
-  availability_zone = data.aws_availability_zone.available.names[count.index]
+  count = length(var.public_subnet_cidrs)
+  availability_zone = data.aws_availability_zones.available.names[count.index]
 
   tags = {
     Name = "public-subnet-${count.index}"
@@ -21,8 +21,8 @@ resource "aws_subnet" "public_subnet" {
 resource "aws_subnet" "private_subnet" {
   vpc_id     = aws_vpc.main.id
   cidr_block = var.private_subnet_cidrs[count.index]
-  count = 3
-  availability_zone = data.aws_availability_zone.available.names[count.index]
+  count = length(var.private_subnet_cidrs)
+  availability_zone = data.aws_availability_zones.available.names[count.index]
 
   tags = {
     Name = "private-subnet-${count.index}"
@@ -30,16 +30,13 @@ resource "aws_subnet" "private_subnet" {
 }
 
 resource "aws_internet_gateway" "igw" {
-    vpc_id = aws_vpc.main.id
-
+  vpc_id = aws_vpc.main.id
   tags = {
     Name = "igw"
   }
 }
 
 resource "aws_eip" "ip" {
-
-
   tags = {
     Name = "elastic-ip" 
   }
@@ -73,13 +70,13 @@ resource "aws_route_table" "private-route-table" {
 }
 
 resource "aws_route_table_association" "public" {
-  count = 3
+  count = length(var.public_subnet_cidrs)
   route_table_id = aws_route_table.public-route-table.id
   subnet_id = aws_subnet.public_subnet[count.index].id
 }
 
 resource "aws_route_table_association" "private" {
-  count = 3
+  count = length(var.private_subnet_cidrs)
   route_table_id = aws_route_table.private-route-table.id
   subnet_id = aws_subnet.private_subnet[count.index].id
 }
