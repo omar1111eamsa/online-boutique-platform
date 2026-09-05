@@ -13,3 +13,13 @@ variable "region" {
   default = "eu-west-1"
   type    = string
 }
+
+
+variable "services" {
+  type = list(string)
+  default = [
+    "frontend", "cartservice", "productcatalogservice", "currencyservice",
+    "paymentservice", "shippingservice", "emailservice", "checkoutservice",
+    "recommendationservice", "adservice", "loadgenerator"
+  ]
+}

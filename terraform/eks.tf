@@ -22,6 +22,7 @@ resource "aws_eks_cluster" "eks-cluster" {
   }
 
   depends_on = [aws_iam_role_policy_attachment.eks_cluster_policy]
+  version = "1.33"
 }
 
 resource "aws_eks_node_group" "main" {
@@ -38,5 +39,5 @@ resource "aws_eks_node_group" "main" {
 
   depends_on = [aws_iam_role_policy_attachment.eks_node_policy]
 
-  instance_types = ["t3.medium"]
+  instance_types = ["t3.small"]
 }

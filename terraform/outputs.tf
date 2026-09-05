@@ -7,3 +7,6 @@ output "private_subnet_ids" {
 output "public_subnet_ids" {
   value = aws_subnet.public[*].id
 }
+output "ecr_repo_urls" {
+  value = { for k, v in aws_ecr_repository.repos : k => v.repository_url }
+}
