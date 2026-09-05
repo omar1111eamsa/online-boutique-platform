@@ -22,7 +22,7 @@ resource "aws_eks_cluster" "eks-cluster" {
   }
 
   depends_on = [aws_iam_role_policy_attachment.eks_cluster_policy]
-  version = "1.33"
+  version    = "1.33"
 }
 
 resource "aws_eks_node_group" "main" {
