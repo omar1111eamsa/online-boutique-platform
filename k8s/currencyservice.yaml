@@ -21,6 +21,8 @@ spec:
           env:
             - name: PORT
               value: "7000"
+            - name: DISABLE_PROFILER
+              value: "true"
           resources:
             requests:
               cpu: "50m"

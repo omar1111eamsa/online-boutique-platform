@@ -1,0 +1,62 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: checkoutservice
+  namespace: apps
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: checkoutservice
+  template:
+    metadata:
+      labels:
+        app: checkoutservice
+    spec:
+      containers:
+        - name: checkoutservice
+          image: 858093957996.dkr.ecr.eu-west-1.amazonaws.com/checkoutservice:v1
+          ports:
+            - containerPort: 5050
+          env:
+            - name: PORT
+              value: "5050"
+            - name: SHIPPING_SERVICE_ADDR
+              value: "shippingservice:50051"
+            - name: PRODUCT_CATALOG_SERVICE_ADDR
+              value: "productcatalogservice:3550"
+            - name: CART_SERVICE_ADDR
+              value: "cartservice:7070"
+            - name: CURRENCY_SERVICE_ADDR
+              value: "currencyservice:7000"
+            - name: EMAIL_SERVICE_ADDR
+              value: "emailservice:8080"
+            - name: PAYMENT_SERVICE_ADDR
+              value: "paymentservice:50051"
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "64Mi"
+            limits:
+              cpu: "200m"
+              memory: "128Mi"
+          readinessProbe:
+            grpc:
+              port: 5050
+          livenessProbe:
+            grpc:
+              port: 5050
+          imagePullPolicy: IfNotPresent
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: checkoutservice
+  namespace: apps
+spec:
+  type: ClusterIP
+  selector:
+    app: checkoutservice
+  ports:
+    - port: 5050
+      targetPort: 5050

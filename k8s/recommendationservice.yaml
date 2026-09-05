@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: recommendationservice
+  namespace: apps
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: recommendationservice
+  template:
+    metadata:
+      labels:
+        app: recommendationservice
+    spec:
+      containers:
+        - name: recommendationservice
+          image: 858093957996.dkr.ecr.eu-west-1.amazonaws.com/recommendationservice:v1
+          ports:
+            - containerPort: 8080
+          env:
+            - name: PORT
+              value: "8080"
+            - name: PRODUCT_CATALOG_SERVICE_ADDR
+              value: "productcatalogservice:3550"
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "220Mi"
+            limits:
+              cpu: "300m"
+              memory: "450Mi"
+          readinessProbe:
+            grpc:
+              port: 8080
+            initialDelaySeconds: 10
+          livenessProbe:
+            grpc:
+              port: 8080
+            initialDelaySeconds: 10
+          imagePullPolicy: IfNotPresent
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: recommendationservice
+  namespace: apps
+spec:
+  type: ClusterIP
+  selector:
+    app: recommendationservice
+  ports:
+    - port: 8080
+      targetPort: 8080
