@@ -9,7 +9,7 @@ resource "aws_vpc" "main" {
   }
 }
 
-resource "aws_subnet" "public-subnet" {
+resource "aws_subnet" "public" {
   vpc_id            = aws_vpc.main.id
   cidr_block        = var.public_subnet_cidrs[count.index]
   count             = length(var.public_subnet_cidrs)
@@ -20,7 +20,7 @@ resource "aws_subnet" "public-subnet" {
   }
 }
 
-resource "aws_subnet" "private-subnet" {
+resource "aws_subnet" "private" {
   vpc_id            = aws_vpc.main.id
   cidr_block        = var.private_subnet_cidrs[count.index]
   count             = length(var.private_subnet_cidrs)
@@ -45,8 +45,8 @@ resource "aws_eip" "eip" {
 }
 
 resource "aws_nat_gateway" "nat" {
-  subnet_id     = aws_subnet.public_subnet[0].id
-  allocation_id = aws_eip.ip.id
+  subnet_id     = aws_subnet.public[0].id
+  allocation_id = aws_eip.eip.id
 
   tags = {
     Name = "nat"
@@ -73,12 +73,12 @@ resource "aws_route_table" "private" {
 
 resource "aws_route_table_association" "public" {
   count          = length(var.public_subnet_cidrs)
-  route_table_id = aws_route_table.public-route-table.id
-  subnet_id      = aws_subnet.public_subnet[count.index].id
+  route_table_id = aws_route_table.public.id
+  subnet_id      = aws_subnet.public[count.index].id
 }
 
 resource "aws_route_table_association" "private" {
   count          = length(var.private_subnet_cidrs)
-  route_table_id = aws_route_table.private-route-table.id
-  subnet_id      = aws_subnet.private_subnet[count.index].id
+  route_table_id = aws_route_table.private.id
+  subnet_id      = aws_subnet.private[count.index].id
 }
