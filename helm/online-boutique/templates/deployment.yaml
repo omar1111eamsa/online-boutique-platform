@@ -27,5 +27,22 @@ spec:
           resources:
             {{- toYaml .resources | nindent 12 }}
           imagePullPolicy: IfNotPresent
+          {{- if eq .probeType "grpc" }}
+          readinessProbe:
+            grpc:
+              port: {{ .port }}
+          livenessProbe:
+            grpc:
+              port: {{ .port }}
+          {{- else if eq .probeType "http" }}
+          readinessProbe:
+            httpGet:
+              path: {{ .probePath }}
+              port: {{ .port }}
+          livenessProbe:
+            httpGet:
+              path: {{ .probePath }}
+              port: {{ .port }}
+          {{- end }}
 ---
 {{- end }}
