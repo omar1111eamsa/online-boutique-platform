@@ -4,10 +4,12 @@ data "aws_availability_zones" "available" {
 
 resource "aws_vpc" "main" {
   cidr_block = "10.0.0.0/16"
-
+  tags = {
+    Name = "micro-serv-vpc"
+  }
 }
 
-resource "aws_subnet" "public_subnet" {
+resource "aws_subnet" "public" {
   vpc_id            = aws_vpc.main.id
   cidr_block        = var.public_subnet_cidrs[count.index]
   count             = length(var.public_subnet_cidrs)
@@ -18,7 +20,7 @@ resource "aws_subnet" "public_subnet" {
   }
 }
 
-resource "aws_subnet" "private_subnet" {
+resource "aws_subnet" "private" {
   vpc_id            = aws_vpc.main.id
   cidr_block        = var.private_subnet_cidrs[count.index]
   count             = length(var.private_subnet_cidrs)
@@ -36,7 +38,7 @@ resource "aws_internet_gateway" "igw" {
   }
 }
 
-resource "aws_eip" "ip" {
+resource "aws_eip" "eip" {
   tags = {
     Name = "elastic-ip"
   }
@@ -51,7 +53,7 @@ resource "aws_nat_gateway" "nat" {
   }
 }
 
-resource "aws_route_table" "public-route-table" {
+resource "aws_route_table" "public" {
   vpc_id = aws_vpc.main.id
   route {
     cidr_block = "0.0.0.0/0"
@@ -60,7 +62,7 @@ resource "aws_route_table" "public-route-table" {
   tags = { Name = "public-route-table" }
 }
 
-resource "aws_route_table" "private-route-table" {
+resource "aws_route_table" "private" {
   vpc_id = aws_vpc.main.id
   route {
     cidr_block     = "0.0.0.0/0"
