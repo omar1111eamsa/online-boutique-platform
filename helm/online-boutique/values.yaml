@@ -31,7 +31,7 @@ services:
         memory: "64Mi"
       limits:
         cpu: "200m"
-        memory: "128Mi"
+        memory: "160Mi"
 
   - name: emailservice
     image: 858093957996.dkr.ecr.eu-west-1.amazonaws.com/emailservice
