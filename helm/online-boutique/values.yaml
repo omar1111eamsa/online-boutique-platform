@@ -185,8 +185,6 @@ services:
       - name: SHOPPING_ASSISTANT_SERVICE_ADDR
         value: "shoppingassistantservice:8080"
       - name: COLLECTOR_SERVICE_ADDR
-        value: "otel-collector:4317"
-      - name: COLLECTOR_SERVICE_ADDR
         value: "otel-collector-opentelemetry-collector.monitoring.svc.cluster.local:4317"
     resources:
       requests:
