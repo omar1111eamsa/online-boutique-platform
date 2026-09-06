@@ -186,6 +186,8 @@ services:
         value: "shoppingassistantservice:8080"
       - name: COLLECTOR_SERVICE_ADDR
         value: "otel-collector-opentelemetry-collector.monitoring.svc.cluster.local:4317"
+      - name: ENABLE_TRACING
+        value: "1"
     resources:
       requests:
         cpu: "100m"
