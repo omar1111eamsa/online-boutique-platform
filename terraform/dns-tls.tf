@@ -27,3 +27,23 @@ resource "aws_acm_certificate_validation" "boutique" {
   certificate_arn         = aws_acm_certificate.boutique.arn
   validation_record_fqdns = [for record in aws_route53_record.cert_validation : record.fqdn]
 }
+
+data "aws_lb" "frontend_alb" {
+  tags = {
+    "elbv2.k8s.aws/cluster" = "eks-cluster"
+  }
+
+  depends_on = [aws_acm_certificate_validation.boutique]
+}
+
+resource "aws_route53_record" "boutique" {
+  zone_id = "Z0996669PGUASVX38NLM"
+  name    = "boutique.myser.serghini.me"
+  type    = "A"
+
+  alias {
+    name                   = data.aws_lb.frontend_alb.dns_name
+    zone_id                = data.aws_lb.frontend_alb.zone_id
+    evaluate_target_health = true
+  }
+}
