@@ -39,5 +39,5 @@ resource "aws_eks_node_group" "main" {
 
   depends_on = [aws_iam_role_policy_attachment.eks_node_policy]
 
-  instance_types = ["t3.medium"]
+  instance_types = ["c7i-flex.large"]
 }
