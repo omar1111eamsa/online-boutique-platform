@@ -21,25 +21,25 @@ jobs:
       matrix:
         service:
           - name: frontend
-            context: microservices-demo/src/frontend
+            context: microservices-demo-src/frontend
           - name: adservice
-            context: microservices-demo/src/adservice
+            context: microservices-demo-src/adservice
           - name: cartservice
-            context: microservices-demo/src/cartservice/src
+            context: microservices-demo-src/cartservice/src
           - name: checkoutservice
-            context: microservices-demo/src/checkoutservice
+            context: microservices-demo-src/checkoutservice
           - name: currencyservice
-            context: microservices-demo/src/currencyservice
+            context: microservices-demo-src/currencyservice
           - name: emailservice
-            context: microservices-demo/src/emailservice
+            context: microservices-demo-src/emailservice
           - name: paymentservice
-            context: microservices-demo/src/paymentservice
+            context: microservices-demo-src/paymentservice
           - name: productcatalogservice
-            context: microservices-demo/src/productcatalogservice
+            context: microservices-demo-src/productcatalogservice
           - name: recommendationservice
-            context: microservices-demo/src/recommendationservice
+            context: microservices-demo-src/recommendationservice
           - name: shippingservice
-            context: microservices-demo/src/shippingservice
+            context: microservices-demo-src/shippingservice
 
     steps:
       - name: Checkout
