@@ -14,6 +14,11 @@ services:
       limits:
         cpu: "200m"
         memory: "128Mi"
+    hpa:
+      enabled: true
+      minReplicas: 1
+      maxReplicas: 4
+      targetCPUUtilization: 50
 
   - name: currencyservice
     image: 858093957996.dkr.ecr.eu-west-1.amazonaws.com/currencyservice
@@ -32,6 +37,7 @@ services:
       limits:
         cpu: "200m"
         memory: "160Mi"
+  
 
   - name: emailservice
     image: 858093957996.dkr.ecr.eu-west-1.amazonaws.com/emailservice
