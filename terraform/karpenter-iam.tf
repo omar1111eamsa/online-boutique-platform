@@ -36,8 +36,17 @@ resource "aws_iam_role_policy" "karpenter_controller" {
           "ec2:CreateTags", "ec2:TerminateInstances", "ec2:DeleteLaunchTemplate",
           "ec2:DescribeLaunchTemplates", "ec2:DescribeInstances", "ec2:DescribeSecurityGroups",
           "ec2:DescribeSubnets", "ec2:DescribeInstanceTypes", "ec2:DescribeInstanceTypeOfferings",
-          "ec2:DescribeAvailabilityZones", "ec2:DescribeSpotPriceHistory",
+          "ec2:DescribeAvailabilityZones", "ec2:DescribeSpotPriceHistory", "ec2:DescribeImages",
           "ssm:GetParameter", "pricing:GetProducts"
+        ]
+        Resource = "*"
+      },
+      {
+        Sid    = "ManageInstanceProfiles"
+        Effect = "Allow"
+        Action = [
+          "iam:CreateInstanceProfile", "iam:TagInstanceProfile", "iam:AddRoleToInstanceProfile",
+          "iam:RemoveRoleFromInstanceProfile", "iam:DeleteInstanceProfile", "iam:GetInstanceProfile"
         ]
         Resource = "*"
       },
@@ -85,7 +94,6 @@ resource "aws_iam_instance_profile" "karpenter_node" {
   name = "KarpenterNodeInstanceProfile-eks-cluster"
   role = aws_iam_role.karpenter_node.name
 }
-
 
 resource "kubernetes_service_account" "karpenter" {
   metadata {
