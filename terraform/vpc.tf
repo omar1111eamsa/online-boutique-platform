@@ -19,6 +19,7 @@ resource "aws_subnet" "public" {
 
   tags = {
     Name = "public-subnet-${count.index}"
+    "kubernetes.io/cluster/eks-cluster" = "owned"
   }
 }
 
@@ -30,6 +31,7 @@ resource "aws_subnet" "private" {
 
   tags = {
     Name = "private-subnet-${count.index}"
+    "kubernetes.io/cluster/eks-cluster" = "owned"
   }
 }
 
