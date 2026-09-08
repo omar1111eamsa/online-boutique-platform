@@ -104,3 +104,9 @@ resource "kubernetes_service_account" "karpenter" {
     }
   }
 }
+
+resource "aws_eks_access_entry" "karpenter_node" {
+  cluster_name  = aws_eks_cluster.eks-cluster.name
+  principal_arn = aws_iam_role.karpenter_node.arn
+  type          = "EC2_LINUX"
+}
