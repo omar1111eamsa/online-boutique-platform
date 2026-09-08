@@ -110,3 +110,19 @@ resource "aws_eks_access_entry" "karpenter_node" {
   principal_arn = aws_iam_role.karpenter_node.arn
   type          = "EC2_LINUX"
 }
+
+resource "aws_iam_role_policy" "karpenter_node_describe" {
+  name = "karpenter-node-describe-instances"
+  role = aws_iam_role.karpenter_node.id
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Effect   = "Allow"
+        Action   = "ec2:DescribeInstances"
+        Resource = "*"
+      }
+    ]
+  })
+}
