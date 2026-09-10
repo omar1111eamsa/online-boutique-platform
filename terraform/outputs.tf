@@ -10,6 +10,18 @@ output "public_subnet_ids" {
   value = module.vpc.public_subnet_ids
 }
 
+output "cluster_name" {
+  value = module.eks.cluster_name
+}
+
+output "cluster_endpoint" {
+  value = module.eks.cluster_endpoint
+}
+
+output "oidc_provider_arn" {
+  value = module.eks.oidc_provider_arn
+}
+
 output "ecr_repo_urls" {
-  value = { for k, v in aws_ecr_repository.repos : k => v.repository_url }
+  value = module.ecr.repository_urls
 }

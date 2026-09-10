@@ -28,3 +28,22 @@ module "eks" {
   admin_principal_arn      = "arn:aws:iam::858093957996:user/terrafrom-aws"
   karpenter_node_role_arn  = aws_iam_role.karpenter_node.arn
 }
+
+module "ecr" {
+  source = "./modules/ecr"
+
+  services             = [
+    "frontend",
+    "cartservice",
+    "productcatalogservice",
+    "currencyservice",
+    "paymentservice",
+    "shippingservice",
+    "emailservice",
+    "checkoutservice",
+    "recommendationservice",
+    "adservice",
+    "loadgenerator",
+  ]
+  image_tag_mutability = "MUTABLE"
+}
