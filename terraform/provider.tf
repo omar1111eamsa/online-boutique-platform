@@ -25,12 +25,14 @@ provider "aws" {
   region = var.region
 }
 
+data "aws_caller_identity" "current" {}
+
 data "aws_eks_cluster_auth" "this" {
-  name = aws_eks_cluster.eks-cluster.name
+  name = module.eks.cluster_name
 }
 
 provider "kubernetes" {
-  host                   = aws_eks_cluster.eks-cluster.endpoint
-  cluster_ca_certificate = base64decode(aws_eks_cluster.eks-cluster.certificate_authority[0].data)
+  host                   = module.eks.cluster_endpoint
+  cluster_ca_certificate = base64decode(module.eks.cluster_certificate_authority_data)
   token                  = data.aws_eks_cluster_auth.this.token
 }

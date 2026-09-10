@@ -1,5 +1,3 @@
-data "aws_caller_identity" "current" {}
-
 resource "aws_iam_role" "karpenter_controller" {
   name = "karpenter-controller-role"
 
@@ -8,13 +6,13 @@ resource "aws_iam_role" "karpenter_controller" {
     Statement = [{
       Effect = "Allow"
       Principal = {
-        Federated = aws_iam_openid_connect_provider.eks_oidc.arn
+        Federated = module.eks.oidc_provider_arn
       }
       Action = "sts:AssumeRoleWithWebIdentity"
       Condition = {
         StringEquals = {
-          "${replace(aws_iam_openid_connect_provider.eks_oidc.url, "https://", "")}:sub" = "system:serviceaccount:kube-system:karpenter"
-          "${replace(aws_iam_openid_connect_provider.eks_oidc.url, "https://", "")}:aud" = "sts.amazonaws.com"
+          "${replace(module.eks.oidc_provider_url, "https://", "")}:sub" = "system:serviceaccount:kube-system:karpenter"
+          "${replace(module.eks.oidc_provider_url, "https://", "")}:aud" = "sts.amazonaws.com"
         }
       }
     }]
@@ -60,7 +58,7 @@ resource "aws_iam_role_policy" "karpenter_controller" {
         Sid      = "EKSClusterEndpointLookup"
         Effect   = "Allow"
         Action   = "eks:DescribeCluster"
-        Resource = aws_eks_cluster.eks-cluster.arn
+        Resource = module.eks.cluster_arn
       }
     ]
   })
@@ -103,12 +101,6 @@ resource "kubernetes_service_account" "karpenter" {
       "eks.amazonaws.com/role-arn" = aws_iam_role.karpenter_controller.arn
     }
   }
-}
-
-resource "aws_eks_access_entry" "karpenter_node" {
-  cluster_name  = aws_eks_cluster.eks-cluster.name
-  principal_arn = aws_iam_role.karpenter_node.arn
-  type          = "EC2_LINUX"
 }
 
 resource "aws_iam_role_policy" "karpenter_node_describe" {
