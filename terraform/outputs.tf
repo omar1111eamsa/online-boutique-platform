@@ -1,12 +1,15 @@
 output "vpc_id" {
-  value = aws_vpc.main.id
+  value = module.vpc.vpc_id
 }
+
 output "private_subnet_ids" {
-  value = aws_subnet.private[*].id
+  value = module.vpc.private_subnet_ids
 }
+
 output "public_subnet_ids" {
-  value = aws_subnet.public[*].id
+  value = module.vpc.public_subnet_ids
 }
+
 output "ecr_repo_urls" {
   value = { for k, v in aws_ecr_repository.repos : k => v.repository_url }
 }
