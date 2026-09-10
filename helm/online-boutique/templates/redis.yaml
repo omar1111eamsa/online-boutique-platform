@@ -31,6 +31,13 @@ spec:
           livenessProbe:
             tcpSocket:
               port: 6379
+          command: ["redis-server", "--requirepass", "$(REDIS_PASSWORD)"]
+          env:
+            - name: REDIS_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: redis-cart-auth
+                  key: password
 ---
 apiVersion: v1
 kind: Service
