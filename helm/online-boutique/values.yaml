@@ -110,7 +110,12 @@ services:
     probeType: grpc
     env:
       - name: REDIS_ADDR
-        value: "redis-cart:6379"
+        value: "redis-cart:6379,password=$(REDIS_PASSWORD)"
+      - name: REDIS_PASSWORD
+        valueFrom:
+          secretKeyRef:
+            name: redis-cart-auth
+            key: password
     resources:
       requests:
         cpu: "100m"
