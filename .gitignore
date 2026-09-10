@@ -1,3 +1,44 @@
+# ---------- Terraform ----------
+# State files
 *.tfstate
 *.tfstate.*
+*.tfstate.backup
+
+# Plan / apply output
+*.tfplan
+*.tfplan.*
+crash.log
+crash.*.log
+
+# Local CLI config / overrides
+.terraformrc
+terraform.rc
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# Provider cache (keep .terraform.lock.hcl!)
 .terraform/
+**/.terraform/*
+
+# Variable files (may contain secrets)
+*.auto.tfvars
+*.auto.tfvars.json
+terraform.tfvars
+terraform.tfvars.json
+
+# ---------- Project ----------
+# Local backup folder from the modularization refactor
+terraform/_legacy/
+
+# ---------- OS / editor ----------
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+.idea/
+.vscode/
+
+# ---------- Archives ----------
+*.zip
