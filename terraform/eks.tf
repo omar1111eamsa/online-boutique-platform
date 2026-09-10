@@ -12,7 +12,7 @@ resource "aws_eks_cluster" "eks-cluster" {
     authentication_mode = "API"
   }
 
-  role_arn = aws_iam_role.eks_cluster_role.arn
+  role_arn = module.iam.cluster_role_arn
 
   vpc_config {
     endpoint_private_access = true
@@ -21,14 +21,14 @@ resource "aws_eks_cluster" "eks-cluster" {
     public_access_cidrs     = [local.my_public_ip_cidr]
   }
 
-  depends_on = [aws_iam_role_policy_attachment.eks_cluster_policy]
+  depends_on = [module.iam]
   version    = "1.33"
 }
 
 resource "aws_eks_node_group" "main" {
   cluster_name    = aws_eks_cluster.eks-cluster.name
   node_group_name = "main-node-group"
-  node_role_arn   = aws_iam_role.eks_node_role.arn
+  node_role_arn   = module.iam.node_role_arn
   subnet_ids      = module.vpc.private_subnet_ids
 
   scaling_config {
@@ -37,7 +37,7 @@ resource "aws_eks_node_group" "main" {
     min_size     = 2
   }
 
-  depends_on = [aws_iam_role_policy_attachment.eks_node_policy]
+  depends_on = [module.iam]
 
   instance_types = ["c7i-flex.large"]
 }
