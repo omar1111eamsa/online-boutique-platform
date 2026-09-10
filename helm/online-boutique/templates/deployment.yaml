@@ -44,5 +44,13 @@ spec:
               path: {{ .probePath }}
               port: {{ .port }}
           {{- end }}
+          securityContext:
+            runAsNonRoot: true
+            runAsUser: 1000
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: false
+            capabilities:
+              drop:
+                - ALL
 ---
 {{- end }}
