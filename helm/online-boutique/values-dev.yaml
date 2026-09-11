@@ -1,0 +1,8 @@
+global:
+  awsAccountId: "900182162489"
+  awsRegion: "eu-west-1"
+  clusterName: "boutique-dev"
+  karpenterNodeRoleName: "boutique-dev-karpenter-node-role"
+  ingress:
+    host: "boutique.myser.serghini.me"
+    certificateArn: "arn:aws:acm:eu-west-1:900182162489:certificate/PENDING_TF_APPLY"

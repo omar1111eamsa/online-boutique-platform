@@ -6,7 +6,7 @@ spec:
   amiFamily: AL2023
   amiSelectorTerms:
     - alias: al2023@latest
-  role: KarpenterNodeRole-{{ .Values.global.clusterName }}
+  role: {{ .Values.global.karpenterNodeRoleName }}
   subnetSelectorTerms:
     - tags:
         kubernetes.io/cluster/{{ .Values.global.clusterName }}: owned

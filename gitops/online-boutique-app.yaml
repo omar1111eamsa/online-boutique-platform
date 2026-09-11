@@ -9,6 +9,9 @@ spec:
     repoURL: https://github.com/omar1111eamsa/online-boutique-platform.git
     targetRevision: main
     path: helm/online-boutique
+    helm:
+      valueFiles:
+        - values-dev.yaml
   destination:
     server: https://kubernetes.default.svc
     namespace: apps

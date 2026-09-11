@@ -1,5 +1,6 @@
 global:
   awsAccountId: ""        # 900182162489  -> fills every image + cert ARN
+  karpenterNodeRoleName: ""
   awsRegion: "eu-west-1"
   clusterName: ""         # boutique-dev    -> fills karpenter tags/role
   ingress:
