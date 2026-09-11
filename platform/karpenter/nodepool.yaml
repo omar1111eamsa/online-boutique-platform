@@ -4,13 +4,14 @@ metadata:
   name: default
 spec:
   amiFamily: AL2023
-  role: KarpenterNodeRole-eks-cluster
+  role: boutique-dev-karpenter-node-role
+  instanceProfile: boutique-dev-karpenter-node
   subnetSelectorTerms:
     - tags:
-        kubernetes.io/cluster/eks-cluster: owned
+        kubernetes.io/cluster/boutique-dev: owned
   securityGroupSelectorTerms:
     - tags:
-        kubernetes.io/cluster/eks-cluster: owned
+        kubernetes.io/cluster/boutique-dev: owned
 ---
 apiVersion: karpenter.sh/v1
 kind: NodePool

@@ -1,11 +1,9 @@
 global:
-  awsAccountId: ""        # 900182162489  -> fills every image + cert ARN
-  karpenterNodeRoleName: ""
+  awsAccountId: ""        # fills every image + cert ARN
   awsRegion: "eu-west-1"
-  clusterName: ""         # boutique-dev    -> fills karpenter tags/role
   ingress:
-    host: ""              # boutique.myser.serghini.me
-    certificateArn: ""    # arn:aws:acm:... -> fills ingress annotation
+    host: ""
+    certificateArn: ""
 
 
 services:
