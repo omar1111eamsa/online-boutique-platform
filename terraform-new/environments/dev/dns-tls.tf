@@ -42,8 +42,8 @@ resource "aws_route53_record" "boutique" {
   type    = "A"
 
   alias {
-    name                   = data.aws_lb.frontend_alb.dns
-    zone_id                = data.aws_lb.frontend_alb.zon
+    name    = data.aws_lb.frontend_alb.dns_name
+    zone_id = data.aws_lb.frontend_alb.zone_id
     evaluate_target_health = true
   }
 }
