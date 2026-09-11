@@ -13,6 +13,7 @@ resource "aws_iam_role" "eso_controller" {
         Condition = {
           StringEquals = {
             "${replace(module.eks.oidc_provider_url, "https://", "")}:sub" = "system:serviceaccount:external-secrets:external-secrets"
+            "${replace(module.eks.oidc_provider_url, "https://", "")}:aud" = "sts.amazonaws.com"
           }
         }
       }
