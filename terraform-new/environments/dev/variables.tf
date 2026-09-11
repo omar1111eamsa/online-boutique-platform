@@ -56,3 +56,13 @@ variable "services" {
     "recommendationservice", "adservice", "loadgenerator"
   ]
 }
+
+variable "domain_name" {
+  type    = string
+  default = "boutique.myser.serghini.me"
+}
+
+variable "hosted_zone_id" {
+  type    = string
+  default = "Z0996669PGUASVX38NLM"
+}
