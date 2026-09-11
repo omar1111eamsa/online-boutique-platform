@@ -7,7 +7,7 @@ locals {
 }
 
 resource "aws_eks_cluster" "eks-cluster" {
-  name = "eks-cluster"
+  name = var.cluster_name
 
   access_config {
     authentication_mode = "API"
@@ -27,7 +27,7 @@ resource "aws_eks_cluster" "eks-cluster" {
 
 resource "aws_eks_node_group" "main" {
   cluster_name    = aws_eks_cluster.eks-cluster.name
-  node_group_name = "main-node-group"
+  node_group_name = "${var.cluster_name}-main"
   node_role_arn   = var.node_role_arn
   subnet_ids      = var.private_subnet_ids
 
@@ -67,7 +67,7 @@ resource "aws_eks_access_policy_association" "admin" {
 
 resource "aws_ec2_tag" "cluster_sg" {
   resource_id = aws_eks_cluster.eks-cluster.vpc_config[0].cluster_security_group_id
-  key         = "kubernetes.io/cluster/eks-cluster"
+  key         = "kubernetes.io/cluster/${var.cluster_name}"
   value       = "owned"
 }
 

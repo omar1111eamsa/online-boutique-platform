@@ -1,11 +1,10 @@
 resource "aws_iam_policy" "lb_controller" {
-  name   = "AWSLoadBalancerControllerIAMPolicy"
+  name   = "${var.cluster_name}-lb-controller-policy"
   policy = file("${path.module}/policies/lb_controller_policy.json")
 }
 
-
 resource "aws_iam_role" "lb_controller" {
-  name = "eks-lb-controller-role"
+  name = "${var.cluster_name}-lb-controller-role"
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17"

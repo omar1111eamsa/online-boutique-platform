@@ -7,9 +7,8 @@ resource "aws_iam_openid_connect_provider" "github" {
   ]
 }
 
-
 resource "aws_iam_role" "github_actions" {
-  name = "github-actions-ci-role"
+  name = "${var.cluster_name}-github-actions-ci-role"
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
@@ -33,10 +32,8 @@ resource "aws_iam_role" "github_actions" {
   })
 }
 
-
-
 resource "aws_iam_role_policy" "github_actions_ecr" {
-  name = "ecr-push"
+  name = "${var.cluster_name}-ecr-push"
   role = aws_iam_role.github_actions.id
 
   policy = jsonencode({
