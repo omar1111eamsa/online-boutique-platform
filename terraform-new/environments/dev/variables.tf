@@ -48,12 +48,6 @@ variable "node_max_size" {
   default = 2
 }
 
-variable "admin_principal_arn" {
-  type        = string
-  description = "IAM user/role ARN granted EKS cluster-admin"
-  default     = "arn:aws:iam::858093957996:user/terrafrom-aws"
-}
-
 variable "services" {
   type = list(string)
   default = [

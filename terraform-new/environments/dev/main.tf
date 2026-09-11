@@ -25,7 +25,7 @@ module "eks" {
   node_desired_size       = var.node_desired_size
   node_min_size           = var.node_min_size
   node_max_size           = var.node_max_size
-  admin_principal_arn     = var.admin_principal_arn
+  admin_principal_arn     = data.aws_caller_identity.current.arn
   karpenter_node_role_arn = module.iam.node_role_arn
 }
 
