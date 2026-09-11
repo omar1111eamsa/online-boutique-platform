@@ -6,3 +6,9 @@ module "vpc" {
   public_subnet_cidrs  = var.public_subnet_cidrs
   private_subnet_cidrs = var.private_subnet_cidrs
 }
+
+module "iam" {
+  source = "../../modules/iam"
+
+  cluster_name = var.cluster_name
+}
