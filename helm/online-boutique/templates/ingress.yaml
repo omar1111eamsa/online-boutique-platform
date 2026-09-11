@@ -7,12 +7,12 @@ metadata:
     alb.ingress.kubernetes.io/scheme: internet-facing
     alb.ingress.kubernetes.io/target-type: ip
     alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS": 443}]'
-    alb.ingress.kubernetes.io/certificate-arn: "arn:aws:acm:eu-west-1:858093957996:certificate/c5be3db7-111e-4702-86da-96e6030ed576"
+    alb.ingress.kubernetes.io/certificate-arn: "{{ .Values.global.ingress.certificateArn }}"
     alb.ingress.kubernetes.io/ssl-redirect: "443"
 spec:
   ingressClassName: alb
   rules:
-    - host: boutique.myser.serghini.me
+    - host: {{ .Values.global.ingress.host }}
       http:
         paths:
           - path: /

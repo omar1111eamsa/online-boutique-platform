@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: {{ .name }}
-          image: "{{ .image }}:{{ .tag }}"
+          image: "{{ $.Values.global.awsAccountId }}.dkr.ecr.{{ $.Values.global.awsRegion }}.amazonaws.com/{{ .image }}:{{ .tag }}"
           ports:
             - containerPort: {{ .port }}
           env:

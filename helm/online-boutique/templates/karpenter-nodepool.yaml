@@ -6,13 +6,13 @@ spec:
   amiFamily: AL2023
   amiSelectorTerms:
     - alias: al2023@latest
-  role: KarpenterNodeRole-eks-cluster
+  role: KarpenterNodeRole-{{ .Values.global.clusterName }}
   subnetSelectorTerms:
     - tags:
-        kubernetes.io/cluster/eks-cluster: owned
+        kubernetes.io/cluster/{{ .Values.global.clusterName }}: owned
   securityGroupSelectorTerms:
     - tags:
-        kubernetes.io/cluster/eks-cluster: owned
+        kubernetes.io/cluster/{{ .Values.global.clusterName }}: owned
 ---
 apiVersion: karpenter.sh/v1
 kind: NodePool

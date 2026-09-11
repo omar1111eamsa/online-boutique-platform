@@ -1,5 +1,6 @@
 global:
   awsAccountId: ""        # 900182162489  -> fills every image + cert ARN
+  awsRegion: "eu-west-1"
   clusterName: ""         # boutique-dev    -> fills karpenter tags/role
   ingress:
     host: ""              # boutique.myser.serghini.me
@@ -8,7 +9,7 @@ global:
 
 services:
   - name: productcatalogservice
-    image: 858093957996.dkr.ecr.eu-west-1.amazonaws.com/productcatalogservice
+    image: productcatalogservice
     tag: v1
     port: 3550
     probeType: grpc
@@ -29,7 +30,7 @@ services:
       targetCPUUtilization: 50
 
   - name: currencyservice
-    image: 858093957996.dkr.ecr.eu-west-1.amazonaws.com/currencyservice
+    image: currencyservice
     tag: v1
     port: 7000
     probeType: grpc
@@ -48,7 +49,7 @@ services:
   
 
   - name: emailservice
-    image: 858093957996.dkr.ecr.eu-west-1.amazonaws.com/emailservice
+    image: emailservice
     tag: v1
     port: 8080
     probeType: grpc
@@ -62,7 +63,7 @@ services:
         memory: "128Mi"
 
   - name: paymentservice
-    image: 858093957996.dkr.ecr.eu-west-1.amazonaws.com/paymentservice
+    image: paymentservice
     tag: v1
     port: 50051
     probeType: grpc
@@ -80,7 +81,7 @@ services:
         memory: "128Mi"
 
   - name: shippingservice
-    image: 858093957996.dkr.ecr.eu-west-1.amazonaws.com/shippingservice
+    image: shippingservice
     tag: v1
     port: 50051
     probeType: grpc
@@ -96,7 +97,7 @@ services:
         memory: "128Mi"
 
   - name: adservice
-    image: 858093957996.dkr.ecr.eu-west-1.amazonaws.com/adservice
+    image: adservice
     tag: v1
     port: 9555
     probeType: grpc
@@ -112,7 +113,7 @@ services:
         memory: "384Mi"
 
   - name: cartservice
-    image: 858093957996.dkr.ecr.eu-west-1.amazonaws.com/cartservice
+    image: cartservice
     tag: v1
     port: 7070
     probeType: grpc
@@ -133,7 +134,7 @@ services:
         memory: "256Mi"
 
   - name: recommendationservice
-    image: 858093957996.dkr.ecr.eu-west-1.amazonaws.com/recommendationservice
+    image: recommendationservice
     tag: v1
     port: 8080
     probeType: grpc
@@ -151,7 +152,7 @@ services:
         memory: "450Mi"
 
   - name: checkoutservice
-    image: 858093957996.dkr.ecr.eu-west-1.amazonaws.com/checkoutservice
+    image: checkoutservice
     tag: v1
     port: 5050
     probeType: grpc
@@ -179,7 +180,7 @@ services:
         memory: "128Mi"
 
   - name: frontend
-    image: 858093957996.dkr.ecr.eu-west-1.amazonaws.com/frontend
+    image: frontend
     tag: v1
     port: 8080
     probeType: http
