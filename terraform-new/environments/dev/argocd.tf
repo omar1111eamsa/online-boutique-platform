@@ -7,8 +7,3 @@ resource "helm_release" "argocd" {
 
   depends_on = [module.eks]
 }
-
-resource "kubernetes_manifest" "argocd_root_app" {
-  manifest   = yamldecode(file("${path.module}/../../../gitops/root.yaml"))
-  depends_on = [helm_release.argocd]
-}
