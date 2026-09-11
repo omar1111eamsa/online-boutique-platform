@@ -53,3 +53,12 @@ variable "admin_principal_arn" {
   description = "IAM user/role ARN granted EKS cluster-admin"
   default     = "arn:aws:iam::858093957996:user/terrafrom-aws"
 }
+
+variable "services" {
+  type = list(string)
+  default = [
+    "frontend", "cartservice", "productcatalogservice", "currencyservice",
+    "paymentservice", "shippingservice", "emailservice", "checkoutservice",
+    "recommendationservice", "adservice", "loadgenerator"
+  ]
+}

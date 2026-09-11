@@ -28,3 +28,10 @@ module "eks" {
   admin_principal_arn     = var.admin_principal_arn
   karpenter_node_role_arn = module.iam.node_role_arn
 }
+
+module "ecr" {
+  source = "../../modules/ecr"
+
+  services             = var.services
+  image_tag_mutability = "MUTABLE"
+}
