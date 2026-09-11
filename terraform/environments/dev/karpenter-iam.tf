@@ -1,5 +1,5 @@
 resource "aws_iam_role" "karpenter_controller" {
-  name = "karpenter-controller-role"
+  name = "${var.cluster_name}-karpenter-controller-role"
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
@@ -20,7 +20,7 @@ resource "aws_iam_role" "karpenter_controller" {
 }
 
 resource "aws_iam_role_policy" "karpenter_controller" {
-  name = "karpenter-controller-policy"
+  name = "${var.cluster_name}-karpenter-controller-policy"
   role = aws_iam_role.karpenter_controller.id
 
   policy = jsonencode({
@@ -65,7 +65,7 @@ resource "aws_iam_role_policy" "karpenter_controller" {
 }
 
 resource "aws_iam_role" "karpenter_node" {
-  name = "KarpenterNodeRole-eks-cluster"
+  name = "${var.cluster_name}-karpenter-node-role"
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
@@ -89,7 +89,7 @@ resource "aws_iam_role_policy_attachment" "karpenter_node" {
 }
 
 resource "aws_iam_instance_profile" "karpenter_node" {
-  name = "KarpenterNodeInstanceProfile-eks-cluster"
+  name = "${var.cluster_name}-karpenter-node"
   role = aws_iam_role.karpenter_node.name
 }
 
@@ -104,7 +104,7 @@ resource "kubernetes_service_account" "karpenter" {
 }
 
 resource "aws_iam_role_policy" "karpenter_node_describe" {
-  name = "karpenter-node-describe-instances"
+  name = "${var.cluster_name}-karpenter-node-describe"
   role = aws_iam_role.karpenter_node.id
 
   policy = jsonencode({

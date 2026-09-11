@@ -30,7 +30,7 @@ resource "aws_acm_certificate_validation" "boutique" {
 
 data "aws_lb" "frontend_alb" {
   tags = {
-    "elbv2.k8s.aws/cluster" = "eks-cluster"
+    "elbv2.k8s.aws/cluster" = var.cluster_name
   }
 
   depends_on = [aws_acm_certificate_validation.boutique]

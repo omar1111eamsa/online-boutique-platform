@@ -8,7 +8,7 @@ resource "aws_vpc" "main" {
   enable_dns_hostnames = true
 
   tags = {
-    Name = "micro-serv-vpc"
+    Name = "${var.cluster_name}-vpc"
   }
 }
 
@@ -19,7 +19,7 @@ resource "aws_subnet" "public" {
   availability_zone = data.aws_availability_zones.available.names[count.index]
 
   tags = {
-    Name                                        = "public-subnet-${count.index}"
+    Name                                        = "${var.cluster_name}-public-${count.index}"
     "kubernetes.io/cluster/${var.cluster_name}" = "owned"
   }
 }
@@ -31,7 +31,7 @@ resource "aws_subnet" "private" {
   availability_zone = data.aws_availability_zones.available.names[count.index]
 
   tags = {
-    Name                                        = "private-subnet-${count.index}"
+    Name                                        = "${var.cluster_name}-private-${count.index}"
     "kubernetes.io/cluster/${var.cluster_name}" = "owned"
   }
 }
@@ -40,13 +40,13 @@ resource "aws_internet_gateway" "igw" {
   vpc_id = aws_vpc.main.id
 
   tags = {
-    Name = "igw"
+    Name = "${var.cluster_name}-igw"
   }
 }
 
 resource "aws_eip" "eip" {
   tags = {
-    Name = "elastic-ip"
+    Name = "${var.cluster_name}-nat-eip"
   }
 }
 
@@ -55,7 +55,7 @@ resource "aws_nat_gateway" "nat" {
   allocation_id = aws_eip.eip.id
 
   tags = {
-    Name = "nat"
+    Name = "${var.cluster_name}-nat"
   }
 }
 
@@ -67,7 +67,7 @@ resource "aws_route_table" "public" {
     gateway_id = aws_internet_gateway.igw.id
   }
 
-  tags = { Name = "public-route-table" }
+  tags = { Name = "${var.cluster_name}-public-rt" }
 }
 
 resource "aws_route_table" "private" {
@@ -78,7 +78,7 @@ resource "aws_route_table" "private" {
     nat_gateway_id = aws_nat_gateway.nat.id
   }
 
-  tags = { Name = "private-route-table" }
+  tags = { Name = "${var.cluster_name}-private-rt" }
 }
 
 resource "aws_route_table_association" "public" {
