@@ -34,9 +34,9 @@ spec:
           values: ["on-demand"]
         - key: node.kubernetes.io/instance-type
           operator: In
-          values: ["c7i-flex.large", "m7i-flex.large", "t3.small"]
+          values: ["c7i-flex.large", "m7i-flex.large"]
   limits:
     cpu: "16"
   disruption:
-    consolidationPolicy: WhenEmptyOrUnderutilized
-    consolidateAfter: 5m
+    consolidationPolicy: WhenEmpty
+    consolidateAfter: 30s
