@@ -12,6 +12,12 @@ spec:
     helm:
       values: |
         grafana:
+          additionalDataSources:
+            - name: Tempo
+              type: tempo
+              access: proxy
+              url: http://tempo.monitoring.svc.cluster.local:3200
+              editable: true
           ingress:
             enabled: true
             ingressClassName: alb

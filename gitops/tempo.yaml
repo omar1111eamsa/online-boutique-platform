@@ -1,0 +1,38 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: tempo
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://grafana.github.io/helm-charts
+    chart: tempo
+    targetRevision: "1.24.4"
+    helm:
+      values: |
+        tempo:
+          retention: 24h
+          # Single-binary, local disk backend (fine for the demo).
+          storage:
+            trace:
+              backend: local
+              local:
+                path: /var/tempo/traces
+              wal:
+                path: /var/tempo/wal
+          # OTLP receivers are on by default (4317 gRPC / 4318 HTTP);
+          # the Tempo HTTP API Grafana queries is served on 3200.
+        # tempo-query (Jaeger UI) is not needed for the Grafana datasource.
+        tempoQuery:
+          enabled: false
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: monitoring
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - ServerSideApply=true
