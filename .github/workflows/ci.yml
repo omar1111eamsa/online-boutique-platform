@@ -40,6 +40,8 @@ jobs:
             context: microservices-demo-src/recommendationservice
           - name: shippingservice
             context: microservices-demo-src/shippingservice
+          - name: loadgenerator
+            context: microservices-demo-src/loadgenerator
 
     steps:
       - name: Checkout

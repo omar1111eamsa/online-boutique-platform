@@ -229,3 +229,9 @@ services:
       minReplicas: 1
       maxReplicas: 10
       targetCPUUtilization: 50
+
+# Load generator (Locust) — drives traffic at the frontend to exercise HPA + Karpenter.
+loadgenerator:
+  enabled: true
+  users: 10     # concurrent Locust users
+  rate: 1       # users spawned per second

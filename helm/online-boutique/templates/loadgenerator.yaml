@@ -1,0 +1,34 @@
+{{- if .Values.loadgenerator.enabled }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: loadgenerator
+  namespace: apps
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: loadgenerator
+  template:
+    metadata:
+      labels:
+        app: loadgenerator
+    spec:
+      containers:
+        - name: loadgenerator
+          image: "{{ .Values.global.awsAccountId }}.dkr.ecr.{{ .Values.global.awsRegion }}.amazonaws.com/loadgenerator:latest"
+          env:
+            - name: FRONTEND_ADDR
+              value: "frontend:8080"
+            - name: USERS
+              value: "{{ .Values.loadgenerator.users }}"
+            - name: RATE
+              value: "{{ .Values.loadgenerator.rate }}"
+          securityContext:
+            runAsNonRoot: true
+            runAsUser: 1000
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+{{- end }}
