@@ -12,6 +12,7 @@ spec:
     helm:
       values: |
         grafana:
+          adminPassword: "Admin123!"
           additionalDataSources:
             - name: Tempo
               type: tempo
