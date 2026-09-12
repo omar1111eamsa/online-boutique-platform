@@ -61,3 +61,8 @@ variable "domain_name" {
   type    = string
   default = "boutique.myser.serghini.me"
 }
+
+variable "github_token" {
+  type      = string
+  sensitive = true
+}
