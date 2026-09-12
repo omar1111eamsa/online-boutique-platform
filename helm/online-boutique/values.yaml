@@ -9,7 +9,7 @@ global:
 services:
   - name: productcatalogservice
     image: productcatalogservice
-    tag: v1
+    tag: latest
     port: 3550
     probeType: grpc
     env:
@@ -30,7 +30,7 @@ services:
 
   - name: currencyservice
     image: currencyservice
-    tag: v1
+    tag: latest
     port: 7000
     probeType: grpc
     env:
@@ -49,7 +49,7 @@ services:
 
   - name: emailservice
     image: emailservice
-    tag: v1
+    tag: latest
     port: 8080
     probeType: grpc
     env: []
@@ -63,7 +63,7 @@ services:
 
   - name: paymentservice
     image: paymentservice
-    tag: v1
+    tag: latest
     port: 50051
     probeType: grpc
     env:
@@ -81,7 +81,7 @@ services:
 
   - name: shippingservice
     image: shippingservice
-    tag: v1
+    tag: latest
     port: 50051
     probeType: grpc
     env:
@@ -97,7 +97,7 @@ services:
 
   - name: adservice
     image: adservice
-    tag: v1
+    tag: latest
     port: 9555
     probeType: grpc
     env:
@@ -113,7 +113,7 @@ services:
 
   - name: cartservice
     image: cartservice
-    tag: v1
+    tag: latest
     port: 7070
     probeType: grpc
     env:
@@ -134,7 +134,7 @@ services:
 
   - name: recommendationservice
     image: recommendationservice
-    tag: v1
+    tag: latest
     port: 8080
     probeType: grpc
     env:
@@ -152,7 +152,7 @@ services:
 
   - name: checkoutservice
     image: checkoutservice
-    tag: v1
+    tag: latest
     port: 5050
     probeType: grpc
     env:
@@ -180,7 +180,7 @@ services:
 
   - name: frontend
     image: frontend
-    tag: v1
+    tag: latest
     port: 8080
     probeType: http
     probePath: /_healthz
