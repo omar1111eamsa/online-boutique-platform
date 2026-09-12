@@ -19,11 +19,28 @@ resource "helm_release" "argocd" {
     value = var.github_token
   }
 
-  # Serve plain HTTP so the ALB terminates TLS in front of it
-  set {
-    name  = "server.insecure"
-    value = "true"
-  }
+  # Serve plain HTTP so the ALB terminates TLS in front of it,
+  # and expose the UI via an ALB Ingress at argocd.myser.serghini.me
+  values = [
+    yamlencode({
+      server = {
+        insecure = true
+        ingress = {
+          enabled          = true
+          ingressClassName = "alb"
+          hostname         = "argocd.myser.serghini.me"
+          annotations = {
+            "alb.ingress.kubernetes.io/certificate-arn"  = aws_acm_certificate.wildcard.arn
+            "alb.ingress.kubernetes.io/listen-ports"     = "[{\"HTTP\": 80}, {\"HTTPS\": 443}]"
+            "alb.ingress.kubernetes.io/scheme"           = "internet-facing"
+            "alb.ingress.kubernetes.io/ssl-redirect"     = "443"
+            "alb.ingress.kubernetes.io/target-type"      = "ip"
+            "external-dns.alpha.kubernetes.io/hostname"  = "argocd.myser.serghini.me"
+          }
+        }
+      }
+    })
+  ]
 
   depends_on = [module.eks]
 }
