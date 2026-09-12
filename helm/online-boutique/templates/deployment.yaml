@@ -22,7 +22,12 @@ spec:
           env:
             {{- range .env }}
             - name: {{ .name }}
+              {{- if .valueFrom }}
+              valueFrom:
+                {{- toYaml .valueFrom | nindent 16 }}
+              {{- else }}
               value: {{ .value | quote }}
+              {{- end }}
             {{- end }}
           resources:
             {{- toYaml .resources | nindent 12 }}
