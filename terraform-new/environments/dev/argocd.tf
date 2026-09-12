@@ -19,5 +19,11 @@ resource "helm_release" "argocd" {
     value = var.github_token
   }
 
+  # Serve plain HTTP so the ALB terminates TLS in front of it
+  set {
+    name  = "server.insecure"
+    value = "true"
+  }
+
   depends_on = [module.eks]
 }

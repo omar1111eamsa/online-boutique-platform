@@ -30,3 +30,8 @@ output "route53_nameservers" {
   value       = aws_route53_zone.myser.name_servers
   description = "Add these as NS records for 'myser' at your DNS provider"
 }
+
+output "wildcard_certificate_arn" {
+  value       = aws_acm_certificate.wildcard.arn
+  description = "ACM cert ARN for *.myser.serghini.me (grafana/argocd ingresses)"
+}
