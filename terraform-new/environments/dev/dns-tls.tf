@@ -1,3 +1,7 @@
+resource "aws_route53_zone" "myser" {
+  name = "myser.serghini.me"
+}
+
 resource "aws_acm_certificate" "boutique" {
   domain_name       = var.domain_name
   validation_method = "DNS"
@@ -16,7 +20,7 @@ resource "aws_route53_record" "cert_validation" {
     }
   }
 
-  zone_id = var.hosted_zone_id
+  zone_id = aws_route53_zone.myser.zone_id
   name    = each.value.name
   type    = each.value.type
   records = [each.value.record]
@@ -28,22 +32,5 @@ resource "aws_acm_certificate_validation" "boutique" {
   validation_record_fqdns = [for record in aws_route53_record.cert_validation : record.fqdn]
 }
 
-data "aws_lb" "frontend_alb" {
-  tags = {
-    "elbv2.k8s.aws/cluster" = var.cluster_name
-  }
-
-  depends_on = [aws_acm_certificate_validation.boutique]
-}
-
-resource "aws_route53_record" "boutique" {
-  zone_id = var.hosted_zone_id
-  name    = var.domain_name
-  type    = "A"
-
-  alias {
-    name    = data.aws_lb.frontend_alb.dns_name
-    zone_id = data.aws_lb.frontend_alb.zone_id
-    evaluate_target_health = true
-  }
-}
+# The `boutique.myser.serghini.me` A alias is created automatically by external-dns
+# (watches the Ingress + ALB), so Terraform does not manage it here.

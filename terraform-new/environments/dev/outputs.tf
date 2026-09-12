@@ -25,3 +25,8 @@ output "oidc_provider_arn" {
 output "ecr_repo_urls" {
   value = module.ecr.repository_urls
 }
+
+output "route53_nameservers" {
+  value       = aws_route53_zone.myser.name_servers
+  description = "Add these as NS records for 'myser' at your DNS provider"
+}
