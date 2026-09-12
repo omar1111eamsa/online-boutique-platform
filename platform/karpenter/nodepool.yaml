@@ -6,8 +6,7 @@ spec:
   amiFamily: AL2023
   role: boutique-dev-karpenter-node-role
   amiSelectorTerms:
-    - tags:
-        karpenter.sh/discovery: boutique-dev
+    - alias: al2023@latest
   subnetSelectorTerms:
     - tags:
         kubernetes.io/cluster/boutique-dev: owned
