@@ -12,6 +12,7 @@ spec:
     helm:
       values: |
         clusterName: boutique-dev
+        vpcId: vpc-043a2ade833cf309d
         serviceAccount:
           create: false
           name: aws-load-balancer-controller

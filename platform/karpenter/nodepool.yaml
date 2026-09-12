@@ -5,7 +5,9 @@ metadata:
 spec:
   amiFamily: AL2023
   role: boutique-dev-karpenter-node-role
-  instanceProfile: boutique-dev-karpenter-node
+  amiSelectorTerms:
+    - tags:
+        karpenter.sh/discovery: boutique-dev
   subnetSelectorTerms:
     - tags:
         kubernetes.io/cluster/boutique-dev: owned
