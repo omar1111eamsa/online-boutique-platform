@@ -9,7 +9,7 @@ spec:
     - alias: al2023@latest
   subnetSelectorTerms:
     - tags:
-        kubernetes.io/cluster/boutique-dev: owned
+        Name: boutique-dev-private-*
   securityGroupSelectorTerms:
     - tags:
         kubernetes.io/cluster/boutique-dev: owned
