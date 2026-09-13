@@ -5,6 +5,11 @@ resource "random_password" "redis_cart" {
 
 resource "aws_secretsmanager_secret" "redis_cart_auth" {
   name = "${var.cluster_name}-redis-cart-auth"
+  # Default recovery window (30 days) blocks recreating a secret with the
+  # same name after `terraform destroy` -- every subsequent `apply` fails
+  # with "already scheduled for deletion" until someone manually restores
+  # or force-deletes it. Purge immediately instead.
+  recovery_window_in_days = 0
 }
 
 resource "aws_secretsmanager_secret_version" "redis_cart_auth" {
