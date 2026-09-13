@@ -227,7 +227,7 @@ services:
     hpa:
       enabled: true
       minReplicas: 1
-      maxReplicas: 10
+      maxReplicas: 20
       targetCPUUtilization: 50
 
 # Load generator (Locust) — drives traffic at the frontend to exercise HPA + Karpenter.
