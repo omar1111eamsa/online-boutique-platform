@@ -25,7 +25,7 @@ spec:
             hosts:
               - grafana.myser.serghini.me
             annotations:
-              alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:eu-west-1:900182162489:certificate/1e981c9e-80f6-4737-9824-2a7d28fb6997
+              alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:eu-west-1:900182162489:certificate/cece6399-bd30-42d9-9d7b-41981b01cc9f
               alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS": 443}]'
               alb.ingress.kubernetes.io/scheme: internet-facing
               alb.ingress.kubernetes.io/ssl-redirect: "443"

@@ -3,4 +3,4 @@ global:
   awsRegion: "eu-west-1"
   ingress:
     host: "boutique.myser.serghini.me"
-    certificateArn: "arn:aws:acm:eu-west-1:900182162489:certificate/cdffd0dd-0a5d-48b2-b686-f473ee69e5a3"
+    certificateArn: "arn:aws:acm:eu-west-1:900182162489:certificate/40a5c188-aa03-4988-8b16-08a5592ab76d"
