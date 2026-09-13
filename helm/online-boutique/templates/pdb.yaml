@@ -1,0 +1,16 @@
+{{- range .Values.services }}
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: {{ .name }}
+  namespace: apps
+spec:
+  # maxUnavailable (not minAvailable) so Karpenter can still evict a
+  # single idle replica during consolidation. minAvailable: 1 would
+  # block consolidation of any service sitting at 1 replica.
+  maxUnavailable: 1
+  selector:
+    matchLabels:
+      app: {{ .name }}
+---
+{{- end }}
