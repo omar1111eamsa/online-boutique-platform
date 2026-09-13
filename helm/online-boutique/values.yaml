@@ -263,5 +263,5 @@ services:
 # Load generator (Locust) — drives traffic at the frontend to exercise HPA + Karpenter.
 loadgenerator:
   enabled: true
-  users: 1000     # concurrent Locust users
+  users: 2000     # concurrent Locust users
   rate: 100      # users spawned per second
