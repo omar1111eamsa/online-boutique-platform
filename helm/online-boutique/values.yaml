@@ -27,6 +27,7 @@ services:
       minReplicas: 1
       maxReplicas: 10
       targetCPUUtilization: 50
+      targetMemoryUtilization: 80
 
   - name: currencyservice
     image: currencyservice
@@ -50,6 +51,7 @@ services:
       minReplicas: 1
       maxReplicas: 6
       targetCPUUtilization: 50
+      targetMemoryUtilization: 80
   
 
   - name: emailservice
@@ -70,6 +72,7 @@ services:
       minReplicas: 1
       maxReplicas: 6
       targetCPUUtilization: 50
+      targetMemoryUtilization: 80
 
   - name: paymentservice
     image: paymentservice
@@ -93,6 +96,7 @@ services:
       minReplicas: 1
       maxReplicas: 6
       targetCPUUtilization: 50
+      targetMemoryUtilization: 80
 
   - name: shippingservice
     image: shippingservice
@@ -114,6 +118,7 @@ services:
       minReplicas: 1
       maxReplicas: 6
       targetCPUUtilization: 50
+      targetMemoryUtilization: 80
 
   - name: adservice
     image: adservice
@@ -135,6 +140,7 @@ services:
       minReplicas: 1
       maxReplicas: 6
       targetCPUUtilization: 50
+      targetMemoryUtilization: 80
 
   - name: cartservice
     image: cartservice
@@ -161,6 +167,7 @@ services:
       minReplicas: 1
       maxReplicas: 8
       targetCPUUtilization: 50
+      targetMemoryUtilization: 80
 
   - name: recommendationservice
     image: recommendationservice
@@ -184,6 +191,7 @@ services:
       minReplicas: 1
       maxReplicas: 8
       targetCPUUtilization: 50
+      targetMemoryUtilization: 80
 
   - name: checkoutservice
     image: checkoutservice
@@ -217,6 +225,7 @@ services:
       minReplicas: 1
       maxReplicas: 8
       targetCPUUtilization: 50
+      targetMemoryUtilization: 80
 
   - name: frontend
     image: frontend
@@ -259,6 +268,7 @@ services:
       minReplicas: 1
       maxReplicas: 20
       targetCPUUtilization: 50
+      targetMemoryUtilization: 80
 
 # Load generator (Locust) — drives traffic at the frontend to exercise HPA + Karpenter.
 loadgenerator:

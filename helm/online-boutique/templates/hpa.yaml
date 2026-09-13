@@ -20,6 +20,12 @@ spec:
         target:
           type: Utilization
           averageUtilization: {{ .hpa.targetCPUUtilization }}
+    - type: Resource
+      resource:
+        name: memory
+        target:
+          type: Utilization
+          averageUtilization: {{ .hpa.targetMemoryUtilization }}
 ---
 {{- end }}
 {{- end }}
