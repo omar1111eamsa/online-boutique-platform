@@ -4,6 +4,6 @@ resource "local_file" "helm_values" {
     aws_account_id  = data.aws_caller_identity.current.account_id
     aws_region      = var.region
     domain_name     = var.domain_name
-    certificate_arn = aws_acm_certificate.boutique.arn
+    certificate_arn = data.aws_acm_certificate.boutique.arn
   })
 }

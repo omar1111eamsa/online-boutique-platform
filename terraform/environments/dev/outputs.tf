@@ -32,6 +32,6 @@ output "route53_nameservers" {
 }
 
 output "wildcard_certificate_arn" {
-  value       = aws_acm_certificate.wildcard.arn
+  value       = data.aws_acm_certificate.wildcard.arn
   description = "ACM cert ARN for *.myser.serghini.me (grafana/argocd ingresses)"
 }

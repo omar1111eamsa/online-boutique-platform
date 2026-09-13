@@ -3,6 +3,6 @@
 resource "local_file" "kube_prometheus_stack_app" {
   filename = "${path.module}/../../../gitops/kube-prometheus-stack.yaml"
   content = templatefile("${path.module}/kube-prometheus-stack.tftpl", {
-    certificate_arn = aws_acm_certificate.wildcard.arn
+    certificate_arn = data.aws_acm_certificate.wildcard.arn
   })
 }

@@ -1,70 +1,23 @@
-# The hosted zone is created and owned by terraform/dns/ (a separate,
-# permanent state), NOT here — so destroying/recreating this environment
-# never changes the zone's NS servers and never requires re-delegating the
-# domain at the registrar. This is a read-only lookup.
+# The hosted zone AND the ACM certificates are created and owned by
+# terraform/dns/ (a separate, permanent state), NOT here -- so
+# destroying/recreating this environment never changes the zone's NS
+# servers, never requires re-delegating the domain at the registrar, and
+# never changes a certificate's ARN (which several gitops/*.yaml files
+# reference by hardcoded value in Ingress annotations). These are all
+# read-only lookups.
 data "aws_route53_zone" "myser" {
   name = "myser.serghini.me"
 }
 
-resource "aws_acm_certificate" "boutique" {
-  domain_name       = var.domain_name
-  validation_method = "DNS"
-
-  lifecycle {
-    create_before_destroy = true
-  }
-}
-
-resource "aws_route53_record" "cert_validation" {
-  for_each = {
-    for dvo in aws_acm_certificate.boutique.domain_validation_options : dvo.domain_name => {
-      name   = dvo.resource_record_name
-      record = dvo.resource_record_value
-      type   = dvo.resource_record_type
-    }
-  }
-
-  zone_id = data.aws_route53_zone.myser.zone_id
-  name    = each.value.name
-  type    = each.value.type
-  records = [each.value.record]
-  ttl     = 60
-}
-
-resource "aws_acm_certificate_validation" "boutique" {
-  certificate_arn         = aws_acm_certificate.boutique.arn
-  validation_record_fqdns = [for record in aws_route53_record.cert_validation : record.fqdn]
+data "aws_acm_certificate" "boutique" {
+  domain   = "boutique.myser.serghini.me"
+  statuses = ["ISSUED"]
 }
 
 # Wildcard cert covering grafana/argocd/prometheus/etc subdomains
-resource "aws_acm_certificate" "wildcard" {
-  domain_name       = "*.myser.serghini.me"
-  validation_method = "DNS"
-
-  lifecycle {
-    create_before_destroy = true
-  }
-}
-
-resource "aws_route53_record" "wildcard_cert_validation" {
-  for_each = {
-    for dvo in aws_acm_certificate.wildcard.domain_validation_options : dvo.domain_name => {
-      name   = dvo.resource_record_name
-      record = dvo.resource_record_value
-      type   = dvo.resource_record_type
-    }
-  }
-
-  zone_id = data.aws_route53_zone.myser.zone_id
-  name    = each.value.name
-  type    = each.value.type
-  records = [each.value.record]
-  ttl     = 60
-}
-
-resource "aws_acm_certificate_validation" "wildcard" {
-  certificate_arn         = aws_acm_certificate.wildcard.arn
-  validation_record_fqdns = [for record in aws_route53_record.wildcard_cert_validation : record.fqdn]
+data "aws_acm_certificate" "wildcard" {
+  domain   = "*.myser.serghini.me"
+  statuses = ["ISSUED"]
 }
 
 # The `boutique.myser.serghini.me` A alias is created automatically by external-dns

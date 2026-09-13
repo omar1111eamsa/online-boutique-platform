@@ -30,7 +30,7 @@ resource "helm_release" "argocd" {
           ingressClassName = "alb"
           hostname         = "argocd.myser.serghini.me"
           annotations = {
-            "alb.ingress.kubernetes.io/certificate-arn"  = aws_acm_certificate.wildcard.arn
+            "alb.ingress.kubernetes.io/certificate-arn"  = data.aws_acm_certificate.wildcard.arn
             "alb.ingress.kubernetes.io/listen-ports"     = "[{\"HTTP\": 80}, {\"HTTPS\": 443}]"
             "alb.ingress.kubernetes.io/scheme"           = "internet-facing"
             "alb.ingress.kubernetes.io/ssl-redirect"     = "443"
