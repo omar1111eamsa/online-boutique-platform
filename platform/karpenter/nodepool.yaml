@@ -21,6 +21,21 @@ spec:
     httpEndpoint: enabled
     httpPutResponseHopLimit: 2
     httpTokens: required
+  # Without a reservation, pods can consume 100% of the node's CPU/memory,
+  # starving kubelet itself -- it misses its heartbeat to the API server
+  # ("Kubelet stopped posting node status") and the node goes NotReady
+  # even though the instance is perfectly healthy. This carves out a
+  # slice the scheduler can never assign to pods, so kubelet always gets
+  # to run regardless of how overcommitted the pods are.
+  kubelet:
+    systemReserved:
+      cpu: 250m
+      memory: 500Mi
+    kubeReserved:
+      cpu: 250m
+      memory: 500Mi
+    evictionHard:
+      memory.available: 5%
 ---
 apiVersion: karpenter.sh/v1
 kind: NodePool
