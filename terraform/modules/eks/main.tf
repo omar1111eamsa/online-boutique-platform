@@ -23,6 +23,27 @@ resource "aws_eks_cluster" "eks-cluster" {
   }
 }
 
+# Default hop limit (1) only lets the host OS reach the EC2 instance
+# metadata service, not pods (they're an extra network hop away) --
+# breaks anything relying on IMDS auto-detection from inside a pod,
+# like the AWS Load Balancer Controller's VPC auto-detect.
+resource "aws_launch_template" "node" {
+  name_prefix = "${var.cluster_name}-node-"
+
+  metadata_options {
+    http_endpoint               = "enabled"
+    http_put_response_hop_limit = 2
+    http_tokens                 = "required"
+  }
+
+  tag_specifications {
+    resource_type = "instance"
+    tags = {
+      Name = "${var.cluster_name}-node"
+    }
+  }
+}
+
 resource "aws_eks_node_group" "main" {
   cluster_name    = aws_eks_cluster.eks-cluster.name
   node_group_name = "${var.cluster_name}-main"
@@ -36,6 +57,11 @@ resource "aws_eks_node_group" "main" {
   }
 
   instance_types = var.node_instance_types
+
+  launch_template {
+    id      = aws_launch_template.node.id
+    version = aws_launch_template.node.latest_version
+  }
 }
 
 data "tls_certificate" "eks_oidc" {

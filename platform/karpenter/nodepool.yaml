@@ -13,6 +13,14 @@ spec:
   securityGroupSelectorTerms:
     - tags:
         kubernetes.io/cluster/boutique-dev: owned
+  # Default hop limit (1) only lets the host OS reach the EC2 instance
+  # metadata service, not pods (they're an extra network hop away) --
+  # breaks anything relying on IMDS auto-detection from inside a pod,
+  # like the AWS Load Balancer Controller's VPC auto-detect.
+  metadataOptions:
+    httpEndpoint: enabled
+    httpPutResponseHopLimit: 2
+    httpTokens: required
 ---
 apiVersion: karpenter.sh/v1
 kind: NodePool
