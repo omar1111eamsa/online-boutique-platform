@@ -34,6 +34,14 @@ spec:
   destination:
     server: https://kubernetes.default.svc
     namespace: monitoring
+  ignoreDifferences:
+    # aws-load-balancer-controller adds this finalizer to the live Ingress
+    # so it can clean up the ALB on delete -- it's never in git, so without
+    # this it always shows as OutOfSync even when nothing is actually wrong.
+    - group: networking.k8s.io
+      kind: Ingress
+      jsonPointers:
+        - /metadata/finalizers
   syncPolicy:
     automated:
       prune: true
