@@ -59,7 +59,8 @@ spec:
           operator: In
           values: ["c7i-flex.large", "m7i-flex.large"]
   limits:
-    cpu: "16"
+    cpu: "64"   # ~32 nodes max (2 vCPU each) -- was 16 (~8 nodes), too tight for the 200-maxReplicas target
+    nodes: "32" # explicit node-count cap as a second safety net alongside the CPU limit
   disruption:
     consolidationPolicy: WhenEmptyOrUnderutilized
     consolidateAfter: 30s
