@@ -26,6 +26,13 @@ spec:
         target:
           type: Utilization
           averageUtilization: {{ .hpa.targetMemoryUtilization }}
+  behavior:
+    scaleDown:
+      stabilizationWindowSeconds: 60
+      policies:
+        - type: Pods
+          value: 2
+          periodSeconds: 60
 ---
 {{- end }}
 {{- end }}
