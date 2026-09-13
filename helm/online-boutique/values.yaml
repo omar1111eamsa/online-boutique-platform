@@ -45,6 +45,11 @@ services:
       limits:
         cpu: "200m"
         memory: "160Mi"
+    hpa:
+      enabled: true
+      minReplicas: 1
+      maxReplicas: 6
+      targetCPUUtilization: 50
   
 
   - name: emailservice
@@ -60,6 +65,11 @@ services:
       limits:
         cpu: "200m"
         memory: "128Mi"
+    hpa:
+      enabled: true
+      minReplicas: 1
+      maxReplicas: 6
+      targetCPUUtilization: 50
 
   - name: paymentservice
     image: paymentservice
@@ -78,6 +88,11 @@ services:
       limits:
         cpu: "200m"
         memory: "128Mi"
+    hpa:
+      enabled: true
+      minReplicas: 1
+      maxReplicas: 6
+      targetCPUUtilization: 50
 
   - name: shippingservice
     image: shippingservice
@@ -94,6 +109,11 @@ services:
       limits:
         cpu: "200m"
         memory: "128Mi"
+    hpa:
+      enabled: true
+      minReplicas: 1
+      maxReplicas: 6
+      targetCPUUtilization: 50
 
   - name: adservice
     image: adservice
@@ -110,6 +130,11 @@ services:
       limits:
         cpu: "300m"
         memory: "384Mi"
+    hpa:
+      enabled: true
+      minReplicas: 1
+      maxReplicas: 6
+      targetCPUUtilization: 50
 
   - name: cartservice
     image: cartservice
@@ -131,6 +156,11 @@ services:
       limits:
         cpu: "300m"
         memory: "256Mi"
+    hpa:
+      enabled: true
+      minReplicas: 1
+      maxReplicas: 8
+      targetCPUUtilization: 50
 
   - name: recommendationservice
     image: recommendationservice
