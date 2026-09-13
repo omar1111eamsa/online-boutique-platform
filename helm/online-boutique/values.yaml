@@ -25,7 +25,7 @@ services:
     hpa:
       enabled: true
       minReplicas: 2
-      maxReplicas: 30
+      maxReplicas: 50
       targetCPUUtilization: 50
       targetMemoryUtilization: 80
 
@@ -49,7 +49,7 @@ services:
     hpa:
       enabled: true
       minReplicas: 2
-      maxReplicas: 30
+      maxReplicas: 50
       targetCPUUtilization: 50
       targetMemoryUtilization: 80
   
@@ -189,7 +189,7 @@ services:
     hpa:
       enabled: true
       minReplicas: 2
-      maxReplicas: 30
+      maxReplicas: 50
       targetCPUUtilization: 50
       targetMemoryUtilization: 80
 
@@ -266,7 +266,7 @@ services:
     hpa:
       enabled: true
       minReplicas: 2
-      maxReplicas: 30
+      maxReplicas: 50
       targetCPUUtilization: 50
       targetMemoryUtilization: 80
 
