@@ -35,17 +35,21 @@ variable "node_instance_types" {
 
 variable "node_desired_size" {
   type    = number
-  default = 1
+  default = 2 # was 1 -- Karpenter's own controller can ONLY run on this node group
+              # (by design, to avoid a chicken-and-egg problem with self-managed
+              # nodes). With desired=1, that single node dying left Karpenter with
+              # nowhere to reschedule, completely unable to fix anything -- including
+              # itself. A second node means there's always a fallback.
 }
 
 variable "node_min_size" {
   type    = number
-  default = 1
+  default = 2
 }
 
 variable "node_max_size" {
   type    = number
-  default = 2
+  default = 3 # was 2 -- headroom above desired=2 for rolling node replacements
 }
 
 variable "services" {
