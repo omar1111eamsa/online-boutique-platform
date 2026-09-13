@@ -1,4 +1,8 @@
-resource "aws_route53_zone" "myser" {
+# The hosted zone is created and owned by terraform/dns/ (a separate,
+# permanent state), NOT here — so destroying/recreating this environment
+# never changes the zone's NS servers and never requires re-delegating the
+# domain at the registrar. This is a read-only lookup.
+data "aws_route53_zone" "myser" {
   name = "myser.serghini.me"
 }
 
@@ -20,7 +24,7 @@ resource "aws_route53_record" "cert_validation" {
     }
   }
 
-  zone_id = aws_route53_zone.myser.zone_id
+  zone_id = data.aws_route53_zone.myser.zone_id
   name    = each.value.name
   type    = each.value.type
   records = [each.value.record]
@@ -51,7 +55,7 @@ resource "aws_route53_record" "wildcard_cert_validation" {
     }
   }
 
-  zone_id = aws_route53_zone.myser.zone_id
+  zone_id = data.aws_route53_zone.myser.zone_id
   name    = each.value.name
   type    = each.value.type
   records = [each.value.record]

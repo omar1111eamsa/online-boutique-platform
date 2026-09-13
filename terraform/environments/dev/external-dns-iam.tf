@@ -30,7 +30,7 @@ resource "aws_iam_role_policy" "external_dns" {
       {
         Effect   = "Allow"
         Action   = ["route53:ChangeResourceRecordSets", "route53:ListResourceRecordSets"]
-        Resource = aws_route53_zone.myser.arn
+        Resource = data.aws_route53_zone.myser.arn
       },
       {
         Effect   = "Allow"
