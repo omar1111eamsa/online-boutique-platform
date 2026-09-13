@@ -264,4 +264,4 @@ services:
 loadgenerator:
   enabled: true
   users: 2000     # concurrent Locust users
-  rate: 300      # users spawned per second
+  rate: 1000      # users spawned per second
