@@ -262,7 +262,7 @@ services:
         memory: "128Mi"   # was 64Mi
       limits:
         cpu: "200m"
-        memory: "256Mi"
+        memory: "512Mi"   # was 256Mi -- OOMKilled under real load (20000 users), 256Mi was too tight
     hpa:
       enabled: true
       minReplicas: 2
