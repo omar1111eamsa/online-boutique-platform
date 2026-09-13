@@ -7,13 +7,13 @@ locals {
 }
 
 resource "aws_eks_cluster" "eks-cluster" {
-  name = var.cluster_name
+  name    = var.cluster_name
+  version = var.cluster_version
+  role_arn = var.cluster_role_arn
 
   access_config {
     authentication_mode = "API"
   }
-
-  role_arn = var.cluster_role_arn
 
   vpc_config {
     endpoint_private_access = true
@@ -21,8 +21,6 @@ resource "aws_eks_cluster" "eks-cluster" {
     subnet_ids              = var.private_subnet_ids
     public_access_cidrs     = [local.my_public_ip_cidr]
   }
-
-  version = var.cluster_version
 }
 
 resource "aws_eks_node_group" "main" {
@@ -45,13 +43,13 @@ data "tls_certificate" "eks_oidc" {
 }
 
 resource "aws_iam_openid_connect_provider" "eks_oidc" {
-  url             = aws_eks_cluster.eks-cluster.identity[0].oidc[0].issuer
-  client_id_list  = ["sts.amazonaws.com"]
+  url = aws_eks_cluster.eks-cluster.identity[0].oidc[0].issuer
+  client_id_list = ["sts.amazonaws.com"]
   thumbprint_list = [data.tls_certificate.eks_oidc.certificates[0].sha1_fingerprint]
 }
 
 resource "aws_eks_access_entry" "admin" {
-  cluster_name  = aws_eks_cluster.eks-cluster.name
+  cluster_name = aws_eks_cluster.eks-cluster.name
   principal_arn = var.admin_principal_arn
 }
 

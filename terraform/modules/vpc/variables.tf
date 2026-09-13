@@ -3,6 +3,11 @@ variable "vpc_cidr" {
   description = "CIDR block for the VPC"
 }
 
+variable "cluster_name" {
+  type        = string
+  description = "EKS cluster name, used for tagging"
+}
+
 variable "public_subnet_cidrs" {
   type        = list(string)
   description = "CIDR blocks for public subnets, one per AZ"
@@ -11,9 +16,4 @@ variable "public_subnet_cidrs" {
 variable "private_subnet_cidrs" {
   type        = list(string)
   description = "CIDR blocks for private subnets, one per AZ"
-}
-
-variable "cluster_name" {
-  type        = string
-  description = "EKS cluster name, used for subnet discovery tags"
 }

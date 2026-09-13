@@ -44,7 +44,7 @@ resource "aws_iam_role_policy" "karpenter_controller" {
         Effect = "Allow"
         Action = [
           "iam:CreateInstanceProfile", "iam:TagInstanceProfile", "iam:AddRoleToInstanceProfile",
-          "iam:RemoveRoleFromInstanceProfile", "iam:DeleteInstanceProfile", "iam:GetInstanceProfile"
+          "iam:RemoveRoleFromInstanceProfile", "iam:DeleteInstanceProfile", "iam:GetInstanceProfile", "iam:ListInstanceProfiles"
         ]
         Resource = "*"
       },
