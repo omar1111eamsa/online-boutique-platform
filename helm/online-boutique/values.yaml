@@ -266,7 +266,7 @@ services:
     hpa:
       enabled: true
       minReplicas: 2
-      maxReplicas: 50
+      maxReplicas: 100
       targetCPUUtilization: 60
       targetMemoryUtilization: 80
 
