@@ -12,7 +12,10 @@ spec:
     helm:
       values: |
         clusterName: boutique-dev
-        vpcId: vpc-043a2ade833cf309d
+        # vpcId intentionally omitted: it's auto-detected from the node's
+        # EC2 instance metadata at runtime. A hardcoded value here goes
+        # stale on every terraform destroy+apply (new VPC ID each time)
+        # since nothing regenerates this static, git-committed file.
         serviceAccount:
           create: false
           name: aws-load-balancer-controller
