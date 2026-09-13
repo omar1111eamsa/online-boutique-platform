@@ -26,7 +26,7 @@ services:
       enabled: true
       minReplicas: 2
       maxReplicas: 50
-      targetCPUUtilization: 50
+      targetCPUUtilization: 60
       targetMemoryUtilization: 80
 
   - name: currencyservice
@@ -50,7 +50,7 @@ services:
       enabled: true
       minReplicas: 2
       maxReplicas: 50
-      targetCPUUtilization: 50
+      targetCPUUtilization: 60
       targetMemoryUtilization: 80
   
 
@@ -71,7 +71,7 @@ services:
       enabled: true
       minReplicas: 2
       maxReplicas: 30
-      targetCPUUtilization: 50
+      targetCPUUtilization: 60
       targetMemoryUtilization: 80
 
   - name: paymentservice
@@ -95,7 +95,7 @@ services:
       enabled: true
       minReplicas: 2
       maxReplicas: 30
-      targetCPUUtilization: 50
+      targetCPUUtilization: 60
       targetMemoryUtilization: 80
 
   - name: shippingservice
@@ -117,7 +117,7 @@ services:
       enabled: true
       minReplicas: 2
       maxReplicas: 30
-      targetCPUUtilization: 50
+      targetCPUUtilization: 60
       targetMemoryUtilization: 80
 
   - name: adservice
@@ -139,7 +139,7 @@ services:
       enabled: true
       minReplicas: 2
       maxReplicas: 30
-      targetCPUUtilization: 50
+      targetCPUUtilization: 60
       targetMemoryUtilization: 80
 
   - name: cartservice
@@ -166,7 +166,7 @@ services:
       enabled: true
       minReplicas: 2
       maxReplicas: 30
-      targetCPUUtilization: 50
+      targetCPUUtilization: 60
       targetMemoryUtilization: 80
 
   - name: recommendationservice
@@ -190,7 +190,7 @@ services:
       enabled: true
       minReplicas: 2
       maxReplicas: 50
-      targetCPUUtilization: 50
+      targetCPUUtilization: 60
       targetMemoryUtilization: 80
 
   - name: checkoutservice
@@ -224,7 +224,7 @@ services:
       enabled: true
       minReplicas: 2
       maxReplicas: 30
-      targetCPUUtilization: 50
+      targetCPUUtilization: 60
       targetMemoryUtilization: 80
 
   - name: frontend
@@ -267,7 +267,7 @@ services:
       enabled: true
       minReplicas: 2
       maxReplicas: 50
-      targetCPUUtilization: 50
+      targetCPUUtilization: 60
       targetMemoryUtilization: 80
 
 # Load generator (Locust) — drives traffic at the frontend to exercise HPA + Karpenter.
