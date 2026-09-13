@@ -30,8 +30,13 @@ spec:
     scaleDown:
       stabilizationWindowSeconds: 60
       policies:
-        - type: Pods
-          value: 2
+        # Percent instead of a fixed pod count: removes half the excess
+        # replicas every 60s, so scale-down speeds up the further above
+        # target you are, instead of crawling down 2 pods/min no matter
+        # how high the peak was (30 -> 2 took ~14min with a fixed count,
+        # ~4min with this).
+        - type: Percent
+          value: 50
           periodSeconds: 60
 ---
 {{- end }}
