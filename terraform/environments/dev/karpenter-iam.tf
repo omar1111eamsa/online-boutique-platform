@@ -27,17 +27,46 @@ resource "aws_iam_role_policy" "karpenter_controller" {
     Version = "2012-10-17"
     Statement = [
       {
-        Sid    = "Karpenter"
+        Sid    = "KarpenterReadOnly"
         Effect = "Allow"
         Action = [
-          "ec2:CreateLaunchTemplate", "ec2:CreateFleet", "ec2:RunInstances",
-          "ec2:CreateTags", "ec2:TerminateInstances", "ec2:DeleteLaunchTemplate",
           "ec2:DescribeLaunchTemplates", "ec2:DescribeInstances", "ec2:DescribeSecurityGroups",
           "ec2:DescribeSubnets", "ec2:DescribeInstanceTypes", "ec2:DescribeInstanceTypeOfferings",
           "ec2:DescribeAvailabilityZones", "ec2:DescribeSpotPriceHistory", "ec2:DescribeImages",
           "ssm:GetParameter", "pricing:GetProducts"
         ]
         Resource = "*"
+      },
+      {
+        # ec2:Create* actions don't support ARN-level resource scoping -- Resource
+        # must stay "*" -- so this Condition is the only real restriction: Karpenter
+        # can only create/tag resources tagged as belonging to THIS cluster.
+        Sid    = "KarpenterCreate"
+        Effect = "Allow"
+        Action = [
+          "ec2:CreateLaunchTemplate", "ec2:CreateFleet", "ec2:RunInstances", "ec2:CreateTags"
+        ]
+        Resource = "*"
+        Condition = {
+          StringEquals = {
+            "aws:RequestTag/kubernetes.io/cluster/${var.cluster_name}" = "owned"
+          }
+        }
+      },
+      {
+        # Same as above but for actions against resources that already exist --
+        # checks the resource's own tag rather than a tag being requested.
+        Sid    = "KarpenterModifyExisting"
+        Effect = "Allow"
+        Action = [
+          "ec2:TerminateInstances", "ec2:DeleteLaunchTemplate"
+        ]
+        Resource = "*"
+        Condition = {
+          StringEquals = {
+            "aws:ResourceTag/kubernetes.io/cluster/${var.cluster_name}" = "owned"
+          }
+        }
       },
       {
         Sid    = "ManageInstanceProfiles"
