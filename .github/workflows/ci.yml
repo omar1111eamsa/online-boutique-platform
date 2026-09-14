@@ -81,6 +81,4 @@ jobs:
         if: github.ref == 'refs/heads/main'
         run: |
           docker tag ${{ matrix.service.name }}:${{ github.sha }} ${{ env.ECR_REGISTRY }}/${{ matrix.service.name }}:${{ github.sha }}
-          docker tag ${{ matrix.service.name }}:${{ github.sha }} ${{ env.ECR_REGISTRY }}/${{ matrix.service.name }}:latest
           docker push ${{ env.ECR_REGISTRY }}/${{ matrix.service.name }}:${{ github.sha }}
-          docker push ${{ env.ECR_REGISTRY }}/${{ matrix.service.name }}:latest

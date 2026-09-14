@@ -33,5 +33,5 @@ module "ecr" {
   source = "../../modules/ecr"
 
   services             = var.services
-  image_tag_mutability = "MUTABLE"
+  image_tag_mutability = "IMMUTABLE"
 }
