@@ -13,6 +13,13 @@ spec:
       labels:
         app: {{ .name }}
     spec:
+      topologySpreadConstraints:
+        - maxSkew: 1
+          topologyKey: kubernetes.io/hostname
+          whenUnsatisfiable: ScheduleAnyway
+          labelSelector:
+            matchLabels:
+              app: {{ .name }}
       containers:
         - name: {{ .name }}
           image: "{{ $.Values.global.awsAccountId }}.dkr.ecr.{{ $.Values.global.awsRegion }}.amazonaws.com/{{ .image }}:{{ .tag }}"
