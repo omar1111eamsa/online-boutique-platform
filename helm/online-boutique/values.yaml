@@ -15,6 +15,10 @@ services:
     env:
       - name: PORT
         value: "3550"
+      - name: COLLECTOR_SERVICE_ADDR
+        value: "otel-collector-opentelemetry-collector.monitoring.svc.cluster.local:4317"
+      - name: ENABLE_TRACING
+        value: "1"
     resources:
       requests:
         cpu: "50m"
@@ -39,6 +43,10 @@ services:
         value: "7000"
       - name: DISABLE_PROFILER
         value: "true"
+      - name: COLLECTOR_SERVICE_ADDR
+        value: "otel-collector-opentelemetry-collector.monitoring.svc.cluster.local:4317"
+      - name: ENABLE_TRACING
+        value: "1"
     resources:
       requests:
         cpu: "50m"
@@ -59,7 +67,11 @@ services:
     tag: 63b64931d741ec045ccd2d1973125b623fc6cd2f
     port: 8080
     probeType: grpc
-    env: []
+    env:
+      - name: COLLECTOR_SERVICE_ADDR
+        value: "otel-collector-opentelemetry-collector.monitoring.svc.cluster.local:4317"
+      - name: ENABLE_TRACING
+        value: "1"
     resources:
       requests:
         cpu: "50m"
@@ -84,6 +96,10 @@ services:
         value: "50051"
       - name: DISABLE_PROFILER
         value: "true"
+      - name: COLLECTOR_SERVICE_ADDR
+        value: "otel-collector-opentelemetry-collector.monitoring.svc.cluster.local:4317"
+      - name: ENABLE_TRACING
+        value: "1"
     resources:
       requests:
         cpu: "50m"
@@ -179,6 +195,10 @@ services:
         value: "8080"
       - name: PRODUCT_CATALOG_SERVICE_ADDR
         value: "productcatalogservice:3550"
+      - name: COLLECTOR_SERVICE_ADDR
+        value: "otel-collector-opentelemetry-collector.monitoring.svc.cluster.local:4317"
+      - name: ENABLE_TRACING
+        value: "1"
     resources:
       requests:
         cpu: "100m"
@@ -213,6 +233,10 @@ services:
         value: "emailservice:8080"
       - name: PAYMENT_SERVICE_ADDR
         value: "paymentservice:50051"
+      - name: COLLECTOR_SERVICE_ADDR
+        value: "otel-collector-opentelemetry-collector.monitoring.svc.cluster.local:4317"
+      - name: ENABLE_TRACING
+        value: "1"
     resources:
       requests:
         cpu: "100m"
