@@ -23,6 +23,25 @@ resource "aws_eks_cluster" "eks-cluster" {
   }
 }
 
+# Default VPC CNI hands out one secondary IP per pod, capping small instance
+# types at ~29 pods regardless of free CPU/memory -- under an HPA scale-out
+# burst, nodes hit that IP ceiling and new pods fail with
+# "failed to assign an IP address to container" long before compute limits.
+# Prefix delegation hands out a /28 (16 IPs) per ENI instead, raising that
+# ceiling to 100+ pods on the same instance types.
+resource "aws_eks_addon" "vpc_cni" {
+  cluster_name  = aws_eks_cluster.eks-cluster.name
+  addon_name    = "vpc-cni"
+  configuration_values = jsonencode({
+    env = {
+      ENABLE_PREFIX_DELEGATION = "true"
+      WARM_PREFIX_TARGET       = "1"
+    }
+  })
+  resolve_conflicts_on_create = "OVERWRITE"
+  resolve_conflicts_on_update = "OVERWRITE"
+}
+
 # Default hop limit (1) only lets the host OS reach the EC2 instance
 # metadata service, not pods (they're an extra network hop away) --
 # breaks anything relying on IMDS auto-detection from inside a pod,
@@ -42,6 +61,34 @@ resource "aws_launch_template" "node" {
       Name = "${var.cluster_name}-node"
     }
   }
+
+  # Without a reservation, pods can consume 100% of the node's CPU/memory,
+  # starving kubelet itself -- it misses its heartbeat to the API server and
+  # the node goes NotReady even though the instance is otherwise healthy.
+  # nodeadm merges this partial NodeConfig into its own auto-generated
+  # cluster-join config, so only the kubelet overrides need to be listed here.
+  user_data = base64encode(<<-EOT
+    ---
+    apiVersion: node.eks.aws/v1alpha1
+    kind: NodeConfig
+    spec:
+      kubelet:
+        config:
+          systemReserved:
+            cpu: "250m"
+            memory: "500Mi"
+          kubeReserved:
+            cpu: "250m"
+            memory: "500Mi"
+          evictionHard:
+            memory.available: "5%"
+          # nodeadm's default max-pods calculation doesn't know prefix
+          # delegation is on -- without this override it stays at the
+          # pre-prefix-delegation ceiling (~29) no matter how many IPs
+          # the CNI can actually hand out.
+          maxPods: 110
+  EOT
+  )
 }
 
 resource "aws_eks_node_group" "main" {
