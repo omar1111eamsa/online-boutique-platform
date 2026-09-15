@@ -28,8 +28,10 @@ import (
 	"go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc"
 	"go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp"
 	"go.opentelemetry.io/otel"
+	"go.opentelemetry.io/otel/attribute"
 	"go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracegrpc"
 	"go.opentelemetry.io/otel/propagation"
+	"go.opentelemetry.io/otel/sdk/resource"
 	sdktrace "go.opentelemetry.io/otel/sdk/trace"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
@@ -183,9 +185,19 @@ func initTracing(log logrus.FieldLogger, ctx context.Context, svc *frontendServe
 	if err != nil {
 		log.Warnf("warn: Failed to create trace exporter: %v", err)
 	}
+	res, err := resource.New(ctx,
+		resource.WithAttributes(
+			attribute.String("service.name", "frontend"),
+		),
+	)
+	if err != nil {
+		log.Warnf("warn: Failed to create otel resource: %v", err)
+	}
+
 	tp := sdktrace.NewTracerProvider(
 		sdktrace.WithBatcher(exporter),
-		sdktrace.WithSampler(sdktrace.AlwaysSample()))
+		sdktrace.WithSampler(sdktrace.AlwaysSample()),
+		sdktrace.WithResource(res))
 	otel.SetTracerProvider(tp)
 
 	return tp, err
