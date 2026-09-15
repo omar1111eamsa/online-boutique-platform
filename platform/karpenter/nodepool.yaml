@@ -13,6 +13,11 @@ spec:
   securityGroupSelectorTerms:
     - tags:
         kubernetes.io/cluster/boutique-dev: owned
+  # Karpenter only attaches tags listed here to instances/launch templates it
+  # creates. The IAM policy's RunInstances/CreateFleet/CreateTags Condition
+  # requires this exact tag -- without it here, every launch is denied.
+  tags:
+    kubernetes.io/cluster/boutique-dev: owned
   # Default hop limit (1) only lets the host OS reach the EC2 instance
   # metadata service, not pods (they're an extra network hop away) --
   # breaks anything relying on IMDS auto-detection from inside a pod,
