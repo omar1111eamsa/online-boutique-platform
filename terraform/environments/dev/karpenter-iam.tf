@@ -38,20 +38,20 @@ resource "aws_iam_role_policy" "karpenter_controller" {
         Resource = "*"
       },
       {
-        # ec2:Create* actions don't support ARN-level resource scoping -- Resource
-        # must stay "*" -- so this Condition is the only real restriction: Karpenter
-        # can only create/tag resources tagged as belonging to THIS cluster.
+        # ec2:Create* actions don't support ARN-level resource scoping, so Resource
+        # must stay "*". A Condition scoping this to aws:RequestTag was tried and
+        # reverted: Karpenter's own EC2NodeClass validation runs a synthetic dry-run
+        # RunInstances call that does not evaluate request-tag Conditions the same
+        # way a real launch does, so a Condition-scoped Allow here permanently fails
+        # that pre-flight check (RunInstancesAuthCheckFailed) even though real
+        # launches would satisfy it. This matches AWS's own official Karpenter IAM
+        # policy, which also leaves these actions unconditional.
         Sid    = "KarpenterCreate"
         Effect = "Allow"
         Action = [
           "ec2:CreateLaunchTemplate", "ec2:CreateFleet", "ec2:RunInstances", "ec2:CreateTags"
         ]
         Resource = "*"
-        Condition = {
-          StringEquals = {
-            "aws:RequestTag/kubernetes.io/cluster/${var.cluster_name}" = "owned"
-          }
-        }
       },
       {
         # Same as above but for actions against resources that already exist --
