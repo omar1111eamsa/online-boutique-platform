@@ -298,5 +298,5 @@ services:
 loadgenerator:
   enabled: true
   tag: 8c7395f920e0dea644727ea356ee9f035f41eb3a
-  users: 100    # concurrent Locust users
-  rate: 10      # users spawned per second
+  users: 0    # concurrent Locust users
+  rate: 0      # users spawned per second
