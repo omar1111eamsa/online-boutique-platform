@@ -9,7 +9,7 @@ global:
 services:
   - name: productcatalogservice
     image: productcatalogservice
-    tag: latest
+    tag: f3bb95397533b1c30772cc5b13c0d9a9eef9dc50
     port: 3550
     probeType: grpc
     env:
@@ -31,7 +31,7 @@ services:
 
   - name: currencyservice
     image: currencyservice
-    tag: latest
+    tag: f3bb95397533b1c30772cc5b13c0d9a9eef9dc50
     port: 7000
     probeType: grpc
     env:
@@ -56,7 +56,7 @@ services:
 
   - name: emailservice
     image: emailservice
-    tag: latest
+    tag: f3bb95397533b1c30772cc5b13c0d9a9eef9dc50
     port: 8080
     probeType: grpc
     env: []
@@ -76,7 +76,7 @@ services:
 
   - name: paymentservice
     image: paymentservice
-    tag: latest
+    tag: f3bb95397533b1c30772cc5b13c0d9a9eef9dc50
     port: 50051
     probeType: grpc
     env:
@@ -100,7 +100,7 @@ services:
 
   - name: shippingservice
     image: shippingservice
-    tag: latest
+    tag: f3bb95397533b1c30772cc5b13c0d9a9eef9dc50
     port: 50051
     probeType: grpc
     env:
@@ -122,7 +122,7 @@ services:
 
   - name: adservice
     image: adservice
-    tag: latest
+    tag: f3bb95397533b1c30772cc5b13c0d9a9eef9dc50
     port: 9555
     probeType: grpc
     env:
@@ -144,7 +144,7 @@ services:
 
   - name: cartservice
     image: cartservice
-    tag: latest
+    tag: f3bb95397533b1c30772cc5b13c0d9a9eef9dc50
     port: 7070
     probeType: grpc
     env:
@@ -171,7 +171,7 @@ services:
 
   - name: recommendationservice
     image: recommendationservice
-    tag: latest
+    tag: f3bb95397533b1c30772cc5b13c0d9a9eef9dc50
     port: 8080
     probeType: grpc
     env:
@@ -195,7 +195,7 @@ services:
 
   - name: checkoutservice
     image: checkoutservice
-    tag: latest
+    tag: f3bb95397533b1c30772cc5b13c0d9a9eef9dc50
     port: 5050
     probeType: grpc
     env:
@@ -229,7 +229,7 @@ services:
 
   - name: frontend
     image: frontend
-    tag: latest
+    tag: f3bb95397533b1c30772cc5b13c0d9a9eef9dc50
     port: 8080
     probeType: http
     probePath: /_healthz
