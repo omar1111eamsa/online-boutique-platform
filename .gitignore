@@ -43,5 +43,3 @@ Thumbs.db
 # ---------- Archives ----------
 *.zip
 
-# Allow non-secret per-environment tfvars
-!terraform/environments/*/terraform.tfvars
