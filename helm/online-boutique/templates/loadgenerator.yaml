@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: loadgenerator
-          image: "{{ .Values.global.awsAccountId }}.dkr.ecr.{{ .Values.global.awsRegion }}.amazonaws.com/loadgenerator:latest"
+          image: "{{ .Values.global.awsAccountId }}.dkr.ecr.{{ .Values.global.awsRegion }}.amazonaws.com/loadgenerator:{{ .Values.loadgenerator.tag }}"
           env:
             - name: FRONTEND_ADDR
               value: "frontend:8080"
