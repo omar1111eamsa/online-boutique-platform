@@ -2,6 +2,8 @@ resource "kubernetes_namespace" "external_secrets" {
   metadata {
     name = "external-secrets"
   }
+
+  depends_on = [module.eks]
 }
 
 resource "kubernetes_service_account" "external_secrets" {
@@ -12,4 +14,6 @@ resource "kubernetes_service_account" "external_secrets" {
       "eks.amazonaws.com/role-arn" = aws_iam_role.eso_controller.arn
     }
   }
+
+  depends_on = [module.eks]
 }

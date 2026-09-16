@@ -130,6 +130,8 @@ resource "kubernetes_service_account" "karpenter" {
       "eks.amazonaws.com/role-arn" = aws_iam_role.karpenter_controller.arn
     }
   }
+
+  depends_on = [module.eks]
 }
 
 resource "aws_iam_role_policy" "karpenter_node_describe" {

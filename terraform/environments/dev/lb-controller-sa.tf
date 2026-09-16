@@ -6,4 +6,6 @@ resource "kubernetes_service_account" "lb_controller" {
       "eks.amazonaws.com/role-arn" = aws_iam_role.lb_controller.arn
     }
   }
+
+  depends_on = [module.eks]
 }
