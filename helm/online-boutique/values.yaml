@@ -9,7 +9,7 @@ global:
 services:
   - name: productcatalogservice
     image: productcatalogservice
-    tag: 8c7395f920e0dea644727ea356ee9f035f41eb3a
+    tag: 70977e53dacfc454d0798e72febd302a6039518c
     port: 3550
     probeType: grpc
     env:
@@ -35,7 +35,7 @@ services:
 
   - name: currencyservice
     image: currencyservice
-    tag: 8c7395f920e0dea644727ea356ee9f035f41eb3a
+    tag: 70977e53dacfc454d0798e72febd302a6039518c
     port: 7000
     probeType: grpc
     env:
@@ -64,7 +64,7 @@ services:
 
   - name: emailservice
     image: emailservice
-    tag: 8c7395f920e0dea644727ea356ee9f035f41eb3a
+    tag: 70977e53dacfc454d0798e72febd302a6039518c
     port: 8080
     probeType: grpc
     env:
@@ -88,7 +88,7 @@ services:
 
   - name: paymentservice
     image: paymentservice
-    tag: 8c7395f920e0dea644727ea356ee9f035f41eb3a
+    tag: 70977e53dacfc454d0798e72febd302a6039518c
     port: 50051
     probeType: grpc
     env:
@@ -116,7 +116,7 @@ services:
 
   - name: shippingservice
     image: shippingservice
-    tag: 8c7395f920e0dea644727ea356ee9f035f41eb3a
+    tag: 70977e53dacfc454d0798e72febd302a6039518c
     port: 50051
     probeType: grpc
     env:
@@ -138,7 +138,7 @@ services:
 
   - name: adservice
     image: adservice
-    tag: 8c7395f920e0dea644727ea356ee9f035f41eb3a
+    tag: 70977e53dacfc454d0798e72febd302a6039518c
     port: 9555
     probeType: grpc
     env:
@@ -160,7 +160,7 @@ services:
 
   - name: cartservice
     image: cartservice
-    tag: 8c7395f920e0dea644727ea356ee9f035f41eb3a
+    tag: 70977e53dacfc454d0798e72febd302a6039518c
     port: 7070
     probeType: grpc
     env:
@@ -187,7 +187,7 @@ services:
 
   - name: recommendationservice
     image: recommendationservice
-    tag: 8c7395f920e0dea644727ea356ee9f035f41eb3a
+    tag: 70977e53dacfc454d0798e72febd302a6039518c
     port: 8080
     probeType: grpc
     env:
@@ -215,7 +215,7 @@ services:
 
   - name: checkoutservice
     image: checkoutservice
-    tag: 8c7395f920e0dea644727ea356ee9f035f41eb3a
+    tag: 70977e53dacfc454d0798e72febd302a6039518c
     port: 5050
     probeType: grpc
     env:
@@ -253,7 +253,7 @@ services:
 
   - name: frontend
     image: frontend
-    tag: 8c7395f920e0dea644727ea356ee9f035f41eb3a
+    tag: 70977e53dacfc454d0798e72febd302a6039518c
     port: 8080
     probeType: http
     probePath: /_healthz
@@ -297,6 +297,6 @@ services:
 # Load generator (Locust) — drives traffic at the frontend to exercise HPA + Karpenter.
 loadgenerator:
   enabled: true
-  tag: 8c7395f920e0dea644727ea356ee9f035f41eb3a
+  tag: 70977e53dacfc454d0798e72febd302a6039518c
   users: 1000    # concurrent Locust users
   rate: 100      # users spawned per second
